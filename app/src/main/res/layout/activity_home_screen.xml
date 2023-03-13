@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".UI.HomeScreen">
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="393dp"
+        android:layout_height="49dp"
+        android:text="Up coming Appointments"
+        android:textAlignment="center"
+        android:textSize="34sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <RadioGroup
+        android:id="@+id/radioGroup2"
+        android:layout_width="249dp"
+        android:layout_height="55dp"
+        android:layout_marginTop="7dp"
+        android:checkedButton="@id/radioAll"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView2">
+
+        <RadioButton
+            android:id="@+id/radioAll"
+            android:layout_width="123dp"
+            android:layout_height="55dp"
+            android:text="All" />
+
+        <RadioButton
+            android:id="@+id/radioWeek"
+            android:layout_width="123dp"
+            android:layout_height="55dp"
+            android:text="Week" />
+    </RadioGroup>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerView2"
+        android:layout_width="400dp"
+        android:layout_height="403dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/radioGroup2" />
+
+    <Button
+        android:id="@+id/buttonExit"
+        android:layout_width="155dp"
+        android:layout_height="47dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="44dp"
+        android:text="Exit"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/buttonReports" />
+
+    <Button
+        android:id="@+id/buttonAnimals"
+        android:layout_width="155dp"
+        android:layout_height="47dp"
+        android:layout_marginEnd="44dp"
+        android:layout_marginBottom="140dp"
+        android:text="Animals"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <Button
+        android:id="@+id/buttonAppointments"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="Appointments"
+        app:layout_constraintEnd_toStartOf="@+id/buttonReports"
+        app:layout_constraintHorizontal_bias="0.568"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/buttonCustomers" />
+
+    <Button
+        android:id="@+id/buttonCustomers"
+        android:layout_width="153dp"
+        android:layout_height="47dp"
+        android:layout_marginBottom="140dp"
+        android:text="Customers"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/buttonAnimals"
+        app:layout_constraintHorizontal_bias="0.559"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/buttonReports"
+        android:layout_width="155dp"
+        android:layout_height="46dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="44dp"
+        android:text="Reports"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/buttonAnimals" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
