@@ -13,10 +13,45 @@
         android:theme="@style/Theme.HomeVetPro"
         tools:targetApi="31">
         <activity
+            android:name=".UI.AnimalDetails"
+            android:exported="false"
+            android:label="Animal Details"
+            android:parentActivityName=".UI.AnimalList">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
+            android:name=".UI.AnimalList"
+            android:exported="false"
+            android:label="Animals"
+            android:parentActivityName=".UI.HomeScreen">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
+            android:name=".UI.CustomerDetails"
+            android:exported="false"
+            android:label="Customer Details"
+            android:parentActivityName=".UI.CustomerList">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
+            android:name=".UI.CustomerList"
+            android:exported="false"
+            android:label="Customers"
+            android:parentActivityName=".UI.HomeScreen">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
             android:name=".UI.HomeScreen"
-            android:label="Home Screen"
-            android:parentActivityName=".UI.MainActivity"
-            android:exported="false">
+            android:exported="false"
+            android:parentActivityName=".UI.MainActivity">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />

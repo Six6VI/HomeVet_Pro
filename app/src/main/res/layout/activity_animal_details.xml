@@ -1,0 +1,273 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:scrollbars="vertical"
+    tools:context=".UI.AnimalDetails">
+
+    <ScrollView
+        android:id="@+id/scrollView"
+        android:layout_width="412dp"
+        android:layout_height="600dp"
+        android:orientation="vertical"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:layout_editor_absoluteX="-1dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/textViewAnimalID"
+                android:layout_width="65dp"
+                android:layout_height="25dp"
+                android:text="Animal ID"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/textViewAnimalName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="28dp"
+                android:text="Name"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textViewAnimalID" />
+
+            <TextView
+                android:id="@+id/textViewAnimalType"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
+                android:layout_marginTop="20dp"
+                android:text="Type"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textViewAnimalName" />
+
+            <TextView
+                android:id="@+id/textViewAnimalGender"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:text="Gender"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textViewAnimalType" />
+
+            <TextView
+                android:id="@+id/textViewAnimalBirth"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:text="Birthday"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textViewAnimalGender" />
+
+            <TextView
+                android:id="@+id/textViewAnimalColor"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:text="Color"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textViewAnimalBirth" />
+
+            <TextView
+                android:id="@+id/textViewAnimalWeight"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="Weight"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textViewAnimalColor" />
+
+            <TextView
+                android:id="@+id/textViewAnimalNotes"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:text="Notes"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textViewAnimalWeight" />
+
+            <TextView
+                android:id="@+id/textViewAnimalEnter"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
+                android:layout_marginTop="40dp"
+                android:text="Enter Date"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textViewAnimalNotes" />
+
+            <TextView
+                android:id="@+id/textViewAnimalModify"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
+                android:layout_marginTop="24dp"
+                android:text="Modify Date"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textViewAnimalEnter" />
+
+            <TextView
+                android:id="@+id/textViewAnimalCustID"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:text="Customer ID"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textViewAnimalModify" />
+
+
+            <EditText
+                android:id="@+id/editTextAnimalID"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:clickable="false"
+                android:ems="10"
+                android:inputType="textPersonName"
+                android:textSize="14sp"
+                app:layout_constraintStart_toEndOf="@+id/textViewAnimalID"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <EditText
+                android:id="@+id/editTextAnimalName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="Animal Name"
+                android:inputType="textPersonName"
+                android:textSize="14sp"
+                app:layout_constraintStart_toEndOf="@+id/textViewAnimalName"
+                app:layout_constraintTop_toBottomOf="@+id/editTextAnimalID" />
+
+            <EditText
+                android:id="@+id/editTextAnimalType"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="Cat/Dog/Farm/Etc"
+                android:inputType="textPersonName"
+                android:textSize="14sp"
+                app:layout_constraintStart_toEndOf="@+id/textViewAnimalType"
+                app:layout_constraintTop_toBottomOf="@+id/editTextAnimalName" />
+
+            <EditText
+                android:id="@+id/editTextAnimalGender"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="Male/Female"
+                android:inputType="textPersonName"
+                android:textSize="14sp"
+                app:layout_constraintStart_toEndOf="@+id/textViewAnimalGender"
+                app:layout_constraintTop_toBottomOf="@+id/editTextAnimalType" />
+
+            <EditText
+                android:id="@+id/editTextAnimalBirth"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="01-01-2023"
+                android:inputType="textPersonName"
+                android:textSize="14sp"
+                app:layout_constraintStart_toEndOf="@+id/textViewAnimalBirth"
+                app:layout_constraintTop_toBottomOf="@+id/editTextAnimalGender" />
+
+            <EditText
+                android:id="@+id/editTextAnimalColor"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:ems="10"
+                android:hint="Major Color"
+                android:inputType="textPersonName"
+                android:textSize="14sp"
+                app:layout_constraintStart_toEndOf="@+id/textViewAnimalColor"
+                app:layout_constraintTop_toBottomOf="@+id/editTextAnimalBirth" />
+
+            <EditText
+                android:id="@+id/editTextAnimalWeight"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="In pounds"
+                android:inputType="textPersonName"
+                android:textSize="14sp"
+                app:layout_constraintStart_toEndOf="@+id/textViewAnimalWeight"
+                app:layout_constraintTop_toBottomOf="@+id/editTextAnimalColor" />
+
+            <EditText
+                android:id="@+id/editTextAnimalNotes"
+                android:layout_width="225dp"
+                android:layout_height="57dp"
+                android:ems="10"
+                android:gravity="start|top"
+                android:inputType="textMultiLine"
+                android:textSize="14sp"
+                app:layout_constraintStart_toEndOf="@+id/textViewAnimalNotes"
+                app:layout_constraintTop_toBottomOf="@+id/editTextAnimalWeight" />
+
+            <EditText
+                android:id="@+id/editTextAnimalEnter"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="01-01-2023"
+                android:inputType="textPersonName"
+                android:textSize="14sp"
+                app:layout_constraintStart_toEndOf="@+id/textViewAnimalEnter"
+                app:layout_constraintTop_toBottomOf="@+id/editTextAnimalNotes" />
+
+            <EditText
+                android:id="@+id/editTextAnimalModify"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="01-01-2023"
+                android:inputType="textPersonName"
+                android:textSize="14sp"
+                app:layout_constraintStart_toEndOf="@+id/textViewAnimalModify"
+                app:layout_constraintTop_toBottomOf="@+id/editTextAnimalEnter" />
+
+            <EditText
+                android:id="@+id/editTextAnimalCustID"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="00"
+                android:inputType="textPersonName"
+                android:textSize="14sp"
+                app:layout_constraintStart_toEndOf="@+id/textViewAnimalCustID"
+                app:layout_constraintTop_toBottomOf="@+id/editTextAnimalModify" />
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
