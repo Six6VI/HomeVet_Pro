@@ -17,6 +17,29 @@ public class HomeScreen extends AppCompatActivity {
         setContentView(R.layout.activity_home_screen);
         Button customers = findViewById(R.id.buttonCustomers);
         Button animals = findViewById(R.id.buttonAnimals);
+        Button appointments =findViewById(R.id.buttonAppointments);
+        Button reports = findViewById(R.id.buttonReports);
+        Button exit = findViewById(R.id.buttonExit);
+        exit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+        reports.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent4 = new Intent(HomeScreen.this, ReportList.class);
+                startActivity(intent4);
+            }
+        });
+        appointments.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent3 = new Intent(HomeScreen.this, AppointmentList.class);
+                startActivity(intent3);
+            }
+        });
         animals.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

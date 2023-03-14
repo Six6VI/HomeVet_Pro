@@ -16,8 +16,8 @@ public class CustomerList extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_customer_list);
         Button addCustomer = findViewById(R.id.custAdd);
-        Button exitCutomer = findViewById(R.id.custExit);
-        exitCutomer.setOnClickListener(new View.OnClickListener() {
+        Button exitCustomer = findViewById(R.id.custExit);
+        exitCustomer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent2 = new Intent(CustomerList.this, HomeScreen.class);
