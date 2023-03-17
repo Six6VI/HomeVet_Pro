@@ -23,7 +23,8 @@ public class HomeScreen extends AppCompatActivity {
         exit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                finish();
+                Intent intent5 = new Intent(HomeScreen.this, MainActivity.class);
+                startActivity(intent5);
             }
         });
         reports.setOnClickListener(new View.OnClickListener() {
