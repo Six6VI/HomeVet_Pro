@@ -8,7 +8,6 @@ import androidx.room.Query;
 import androidx.room.Update;
 
 import com.example.homevetpro.Entities.Report;
-import com.example.homevetpro.Entities.User;
 
 import java.util.List;
 
@@ -21,5 +20,5 @@ public interface ReportDAO {
     @Delete
     void delete(Report report);
     @Query("SELECT * FROM reports")
-    List<User> getAllReports();
+    List<Report> getAllReports();
 }

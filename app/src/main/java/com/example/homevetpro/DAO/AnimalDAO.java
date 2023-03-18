@@ -8,7 +8,6 @@ import androidx.room.Query;
 import androidx.room.Update;
 
 import com.example.homevetpro.Entities.Animal;
-import com.example.homevetpro.Entities.User;
 
 import java.util.List;
 
@@ -21,5 +20,5 @@ public interface AnimalDAO {
     @Delete
     void delete(Animal animal);
     @Query("SELECT * FROM animals")
-    List<User> getAllAnimals();
+    List<Animal> getAllAnimals();
 }

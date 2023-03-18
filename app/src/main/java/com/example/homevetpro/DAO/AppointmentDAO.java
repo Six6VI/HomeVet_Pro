@@ -8,7 +8,6 @@ import androidx.room.Query;
 import androidx.room.Update;
 
 import com.example.homevetpro.Entities.Appointment;
-import com.example.homevetpro.Entities.User;
 
 import java.util.List;
 
@@ -21,5 +20,5 @@ public interface AppointmentDAO {
     @Delete
     void delete(Appointment appointment);
     @Query("SELECT * FROM appointments")
-    List<User> getAllAppointments();
+    List<Appointment> getAllAppointments();
 }
