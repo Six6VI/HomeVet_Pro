@@ -14,11 +14,11 @@ public class Appointment {
     private String appointmentNotes;
     private int appointmentDuration;
     private Double appointmentCost;
-    private Timestamp appEnterDate;
-    private Timestamp appModifyDate;
+    private String appEnterDate;
+    private String appModifyDate;
     private int appAnimalID;
 
-    public Appointment(int appointmentID, String appointmentDate, String appointmentNotes, int appointmentDuration, Double appointmentCost, Timestamp appEnterDate, Timestamp appModifyDate, int appAnimalID) {
+    public Appointment(int appointmentID, String appointmentDate, String appointmentNotes, int appointmentDuration, Double appointmentCost, String appEnterDate, String appModifyDate, int appAnimalID) {
         this.appointmentID = appointmentID;
         this.appointmentDate = appointmentDate;
         this.appointmentNotes = appointmentNotes;
@@ -72,19 +72,19 @@ public class Appointment {
         this.appointmentCost = appointmentCost;
     }
 
-    public Timestamp getAppEnterDate() {
+    public String getAppEnterDate() {
         return appEnterDate;
     }
 
-    public void setAppEnterDate(Timestamp appEnterDate) {
+    public void setAppEnterDate(String appEnterDate) {
         this.appEnterDate = appEnterDate;
     }
 
-    public Timestamp getAppModifyDate() {
+    public String getAppModifyDate() {
         return appModifyDate;
     }
 
-    public void setAppModifyDate(Timestamp appModifyDate) {
+    public void setAppModifyDate(String appModifyDate) {
         this.appModifyDate = appModifyDate;
     }
 

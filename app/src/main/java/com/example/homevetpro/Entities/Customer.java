@@ -15,10 +15,10 @@ public class Customer {
     private String customerAddress;
     private String customerZip;
     private String customerPhone;
-    private Timestamp customerEnterDate;
-    private Timestamp customerModifyDate;
+    private String customerEnterDate;
+    private String customerModifyDate;
 
-    public Customer(int customerID, String customerName, String customerAddress, String customerZip, String customerPhone, Timestamp customerEnterDate, Timestamp customerModifyDate) {
+    public Customer(int customerID, String customerName, String customerAddress, String customerZip, String customerPhone, String customerEnterDate, String customerModifyDate) {
         this.customerID = customerID;
         this.customerName = customerName;
         this.customerAddress = customerAddress;
@@ -71,19 +71,19 @@ public class Customer {
         this.customerPhone = customerPhone;
     }
 
-    public Timestamp getCustomerEnterDate() {
+    public String getCustomerEnterDate() {
         return customerEnterDate;
     }
 
-    public void setCustomerEnterDate(Timestamp customerEnterDate) {
+    public void setCustomerEnterDate(String customerEnterDate) {
         this.customerEnterDate = customerEnterDate;
     }
 
-    public Timestamp getCustomerModifyDate() {
+    public String getCustomerModifyDate() {
         return customerModifyDate;
     }
 
-    public void setCustomerModifyDate(Timestamp customerModifyDate) {
+    public void setCustomerModifyDate(String customerModifyDate) {
         this.customerModifyDate = customerModifyDate;
     }
 }

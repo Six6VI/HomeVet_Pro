@@ -17,11 +17,11 @@ public class Animal {
     private String animalColor;
     private int animalWeight;
     private String animalNotes;
-    private Timestamp animalEnterDate;
-    private Timestamp animalModifyDate;
+    private String animalEnterDate;
+    private String animalModifyDate;
     private int animalCustID;
 
-    public Animal(int animalID, String animalName, String animalType, String animalGender, String animalBirthday, String animalColor, int animalWeight, String animalNotes, Timestamp animalEnterDate, Timestamp animalModifyDate, int animalCustID) {
+    public Animal(int animalID, String animalName, String animalType, String animalGender, String animalBirthday, String animalColor, int animalWeight, String animalNotes, String animalEnterDate, String animalModifyDate, int animalCustID) {
         this.animalID = animalID;
         this.animalName = animalName;
         this.animalType = animalType;
@@ -102,19 +102,19 @@ public class Animal {
         this.animalNotes = animalNotes;
     }
 
-    public Timestamp getAnimalEnterDate() {
+    public String getAnimalEnterDate() {
         return animalEnterDate;
     }
 
-    public void setAnimalEnterDate(Timestamp animalEnterDate) {
+    public void setAnimalEnterDate(String animalEnterDate) {
         this.animalEnterDate = animalEnterDate;
     }
 
-    public Timestamp getAnimalModifyDate() {
+    public String getAnimalModifyDate() {
         return animalModifyDate;
     }
 
-    public void setAnimalModifyDate(Timestamp animalModifyDate) {
+    public void setAnimalModifyDate(String animalModifyDate) {
         this.animalModifyDate = animalModifyDate;
     }
 
