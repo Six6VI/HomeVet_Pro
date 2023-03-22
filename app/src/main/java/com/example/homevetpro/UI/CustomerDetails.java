@@ -1,6 +1,8 @@
 package com.example.homevetpro.UI;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,8 +11,12 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.example.homevetpro.Database.Repository;
+import com.example.homevetpro.Entities.Animal;
 import com.example.homevetpro.Entities.Customer;
 import com.example.homevetpro.R;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class CustomerDetails extends AppCompatActivity {
 
@@ -67,6 +73,18 @@ public class CustomerDetails extends AppCompatActivity {
 
         repository = new Repository(getApplication());
 
+        RecyclerView recyclerView = findViewById(R.id.recyclerViewAnimals);
+        repository = new Repository(getApplication());
+        final AnimalAdapter animalAdapter = new AnimalAdapter(this);
+        recyclerView.setAdapter(animalAdapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        List<Animal> filteredAnimals = new ArrayList<>();
+        for (Animal p : repository.getmAllAnimals()) {
+            if (p.getAnimalCustID() == customerID) filteredAnimals.add(p);
+        }
+
+        animalAdapter.setAnimals(filteredAnimals);
+
         Button button = findViewById(R.id.buttonCustomerSave);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -80,6 +98,14 @@ public class CustomerDetails extends AppCompatActivity {
                 }
                 Intent intent = new Intent(CustomerDetails.this, CustomerList.class);
                 startActivity(intent);
+            }
+        });
+
+        Button add = findViewById(R.id.buttonCustAddAnimal);
+        add.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
             }
         });
 

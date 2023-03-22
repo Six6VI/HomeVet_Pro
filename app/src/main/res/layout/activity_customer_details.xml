@@ -204,6 +204,7 @@
         app:layout_constraintTop_toBottomOf="@+id/scrollView" />
 
     <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerViewAnimals"
         android:layout_width="195dp"
         android:layout_height="229dp"
         android:layout_marginStart="108dp"

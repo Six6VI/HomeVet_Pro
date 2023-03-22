@@ -29,7 +29,7 @@ public class AnimalAdapter extends RecyclerView.Adapter<AnimalAdapter.AnimalView
                 public void onClick(View v) {
                     int position=getAdapterPosition();
                     final Animal current = mAnimal.get(position);
-                    Intent intent=new Intent(context, CustomerDetails.class);
+                    Intent intent=new Intent(context, AnimalDetails.class);
                     intent.putExtra("animalID", current.getAnimalID());
                     intent.putExtra("animalName", current.getAnimalName());
                     intent.putExtra("animalType", current.getAnimalType());
@@ -48,7 +48,7 @@ public class AnimalAdapter extends RecyclerView.Adapter<AnimalAdapter.AnimalView
         }
     }
 
-    private List<Animal> mAnimal;
+    private static List<Animal> mAnimal;
     private final Context context;
     private final LayoutInflater mInflater;
     public AnimalAdapter(Context context){
