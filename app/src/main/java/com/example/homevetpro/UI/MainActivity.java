@@ -10,6 +10,8 @@ import android.view.View;
 import android.widget.Button;
 
 import com.example.homevetpro.Database.Repository;
+import com.example.homevetpro.Entities.Animal;
+import com.example.homevetpro.Entities.Customer;
 import com.example.homevetpro.Entities.User;
 import com.example.homevetpro.R;
 
@@ -47,11 +49,15 @@ public class MainActivity extends AppCompatActivity {
         switch (item.getItemId()){
             case R.id.loadSAmpleDAta:
                 //Test if database is working
-        /*
+
         User user = new User(0, "test", "test");
+        Customer customer = new Customer(0, "Sam Smith", "123 first st", "46577", "111-222-3333", "01-01-2023", "02-01-2023");
+        Animal animal = new Animal(0,"sox","cat","male","01-01-2023","orange",12,"He likes fish","01-01-2023","02-03-2023",1);
         Repository repository=new Repository(getApplication());
         repository.insert(user);
-        */
+        repository.insert(customer);
+        repository.insert(animal);
+
            return true;
         }
         return super.onOptionsItemSelected(item);

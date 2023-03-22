@@ -83,6 +83,7 @@
             android:name=".UI.CustomerList"
             android:exported="false"
             android:label="Customers"
+            android:windowSoftInputMode="adjustPan"
             android:parentActivityName=".UI.HomeScreen">
             <meta-data
                 android:name="android.app.lib_name"
