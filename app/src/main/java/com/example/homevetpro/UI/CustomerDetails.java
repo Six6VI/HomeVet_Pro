@@ -105,6 +105,18 @@ public class CustomerDetails extends AppCompatActivity {
         add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (customerID == -1) {
+                    customer = new Customer(0, editName.getText().toString(), editAddress.getText().toString(), editZip.getText().toString(), editPhone.getText().toString(), editEnterDate.getText().toString(), editModifyDate.getText().toString());
+                    repository.insert(customer);
+                } else {
+                    customer = new Customer(customerID, editName.getText().toString(), editAddress.getText().toString(), editZip.getText().toString(), editPhone.getText().toString(), editEnterDate.getText().toString(), editModifyDate.getText().toString());
+                    repository.update(customer);
+                }
+
+                int id = Integer.parseInt(editID.getText().toString());
+                Intent intent = new Intent(v.getContext(),AnimalDetails.class);
+                intent.putExtra("animalCustID",id);
+                startActivity(intent);
 
             }
         });

@@ -1,6 +1,8 @@
 package com.example.homevetpro.UI;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,8 +12,14 @@ import android.widget.EditText;
 
 import com.example.homevetpro.Database.Repository;
 import com.example.homevetpro.Entities.Animal;
+import com.example.homevetpro.Entities.Appointment;
 import com.example.homevetpro.Entities.Customer;
 import com.example.homevetpro.R;
+
+import org.w3c.dom.Text;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class AnimalDetails extends AppCompatActivity {
 
@@ -44,8 +52,6 @@ public class AnimalDetails extends AppCompatActivity {
 
 
 
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -73,7 +79,7 @@ public class AnimalDetails extends AppCompatActivity {
         animalNotes = getIntent().getStringExtra("animalNotes");
         animalEnterDate = getIntent().getStringExtra("animalEnterDate");
         animalModifyDate = getIntent().getStringExtra("animalModifyDate");
-        animalCustID = getIntent().getIntExtra("animalCustID",-1);
+        animalCustID = getIntent().getIntExtra("animalCustID", -1);
 
         String aniID = String.valueOf(animalID);
         String aniCustID = String.valueOf(animalCustID);
@@ -92,6 +98,18 @@ public class AnimalDetails extends AppCompatActivity {
         editCustAnimalID.setText(aniCustID);
 
         repository = new Repository(getApplication());
+
+        RecyclerView recyclerView = findViewById(R.id.recyclerViewAppointment);
+        repository = new Repository(getApplication());
+        final AppointmentAdapter appointmentAdapter = new AppointmentAdapter(this);
+        recyclerView.setAdapter(appointmentAdapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        List<Appointment> filteredApp = new ArrayList<>();
+        for (Appointment p : repository.getmAllAppointments()) {
+            if (p.getAppAnimalID() == animalID) filteredApp.add(p);
+        }
+
+        appointmentAdapter.setAppointments(filteredApp);
 
         Button button = findViewById(R.id.buttonAnimalSave);
         button.setOnClickListener(new View.OnClickListener() {
