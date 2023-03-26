@@ -84,7 +84,7 @@ public class AppointmentAdapter extends RecyclerView.Adapter<AppointmentAdapter.
         if (mAppointment!=null) {
             Appointment current = mAppointment.get(position);
             String customer = String.valueOf(current.getAppCustID());
-            String aaaaaaanimal = (" " + String.valueOf(current.getAppAnimalID()));
+            String animal = (" " + String.valueOf(current.getAppAnimalID()));
             String date = (" " + current.getAppointmentDate());
 
 

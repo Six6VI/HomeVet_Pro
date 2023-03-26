@@ -113,15 +113,15 @@ public class AnimalDetails extends AppCompatActivity {
 
         appointmentAdapter.setAppointments(filteredApp);
 
-        Button button = findViewById(R.id.buttonAnimalSave);
-        button.setOnClickListener(new View.OnClickListener() {
+        Button save = findViewById(R.id.buttonAnimalSave);
+        save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (animalID == -1) {
                     animal = new Animal(0, editName.getText().toString(), editType.getText().toString(), editGender.getText().toString(), editBirthday.getText().toString(), editColor.getText().toString(), Integer.valueOf(editWeight.getText().toString()), editNotes.getText().toString(), editEnterDate.getText().toString(),editModifyDate.getText().toString(),Integer.valueOf(editCustAnimalID.getText().toString()));
                     repository.insert(animal);
                 } else {
-                    animal = new Animal(0, editName.getText().toString(), editType.getText().toString(), editGender.getText().toString(), editBirthday.getText().toString(), editColor.getText().toString(), Integer.valueOf(editWeight.getText().toString()), editNotes.getText().toString(), editEnterDate.getText().toString(),editModifyDate.getText().toString(),Integer.valueOf(editCustAnimalID.getText().toString()));
+                    animal = new  Animal(animalID, editName.getText().toString(), editType.getText().toString(), editGender.getText().toString(), editBirthday.getText().toString(), editColor.getText().toString(), Integer.valueOf(editWeight.getText().toString()), editNotes.getText().toString(), editEnterDate.getText().toString(),editModifyDate.getText().toString(),Integer.valueOf(editCustAnimalID.getText().toString()));
                     repository.update(animal);
                 }
                 Intent intent = new Intent(AnimalDetails.this, AnimalList.class);

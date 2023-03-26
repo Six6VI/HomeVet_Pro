@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -13,11 +15,24 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.homevetpro.Entities.Customer;
 import com.example.homevetpro.R;
 
+import java.util.ArrayList;
 import java.util.List;
 
-import kotlinx.coroutines.channels.ProduceKt;
+public class CustomerAdapter extends RecyclerView.Adapter<CustomerAdapter.CustomerViewHolder> implements Filterable{
 
-public class CustomerAdapter extends RecyclerView.Adapter<CustomerAdapter.CustomerViewHolder> {
+    private List<Customer> customerList;
+    private final List<Customer> customerListFull;
+
+    private final Context context;
+    private final LayoutInflater mInflater;
+
+    public CustomerAdapter(Context context, List<Customer> customerList){
+        mInflater= LayoutInflater.from(context);
+        this.context=context;
+        this.customerList = customerList;
+        customerListFull= new ArrayList<>(customerList);
+
+    }
 
     class CustomerViewHolder extends RecyclerView.ViewHolder{
 
@@ -29,7 +44,7 @@ public class CustomerAdapter extends RecyclerView.Adapter<CustomerAdapter.Custom
                 @Override
                 public void onClick(View v) {
                     int position=getAdapterPosition();
-                    final Customer current = mCustomer.get(position);
+                    final Customer current = customerList.get(position);
                     Intent intent=new Intent(context, CustomerDetails.class);
                     intent.putExtra("customerID", current.getCustomerID());
                     intent.putExtra("customerName", current.getCustomerName());
@@ -45,14 +60,6 @@ public class CustomerAdapter extends RecyclerView.Adapter<CustomerAdapter.Custom
         }
     }
 
-    private List<Customer> mCustomer;
-    private final Context context;
-    private final LayoutInflater mInflater;
-    public CustomerAdapter(Context context){
-        mInflater= LayoutInflater.from(context);
-        this.context=context;
-    }
-
     @NonNull
     @Override
     public CustomerAdapter.CustomerViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -62,10 +69,9 @@ public class CustomerAdapter extends RecyclerView.Adapter<CustomerAdapter.Custom
 
     @Override
     public void onBindViewHolder(@NonNull CustomerAdapter.CustomerViewHolder holder, int position) {
-        if (mCustomer!=null){
-            Customer current = mCustomer.get(position);
-            String name = current.getCustomerName();
-            holder.customerTextView.setText(name);
+        if (customerList!=null){
+            Customer current = customerList.get(position);
+            holder.customerTextView.setText(current.getCustomerName());
 
 
         }
@@ -77,13 +83,49 @@ public class CustomerAdapter extends RecyclerView.Adapter<CustomerAdapter.Custom
 
     @Override
     public int getItemCount() {
-        return mCustomer.size();
+        if (customerList != null) {
+            return customerList.size();
+        } else {
+            return 0;
+        }
     }
 
-    public void setCustomers(List<Customer> customers){
-        mCustomer=customers;
+    public void setCustomers(List<Customer> customerList){
+        this.customerList = customerList;
         notifyDataSetChanged();
     }
 
+    public Filter getFilter(){
+        return customerFilter;
+    }
+
+    private  Filter customerFilter = new Filter() {
+        @Override
+        protected FilterResults performFiltering(CharSequence constraint) {
+            List<Customer> filteredCustomers = new ArrayList<>();
+            FilterResults results = new FilterResults();
+
+            if(constraint == null || constraint.length() ==0){
+                filteredCustomers.addAll(customerListFull);
+            }else {
+                String filterPattern = constraint.toString().toLowerCase().trim();
+
+                for(Customer item: customerListFull){
+                    if (item.getCustomerName().toLowerCase().contains(filterPattern)){
+                        filteredCustomers.add(item);
+                    }
+                }
+            }
+            results.values = filteredCustomers;
+            return results;
+        }
+
+        @Override
+        protected void publishResults(CharSequence constraint, FilterResults results) {
+            customerList.clear();
+            customerList.addAll((List) results.values);
+            notifyDataSetChanged();
+        }
+    };
 
 }
