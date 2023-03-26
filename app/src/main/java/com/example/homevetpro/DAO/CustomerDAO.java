@@ -14,6 +14,7 @@ import java.util.List;
 
 @Dao
 public interface CustomerDAO {
+
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     void insert(Customer customer);
     @Update
@@ -22,4 +23,6 @@ public interface CustomerDAO {
     void delete(Customer customer);
     @Query("SELECT * FROM customers")
     List<Customer> getAllCustomers();
+    @Query("SELECT customerName from customers where customerID=:id")
+    String getNameByID(int id);
 }

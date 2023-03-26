@@ -21,4 +21,5 @@ public interface AppointmentDAO {
     void delete(Appointment appointment);
     @Query("SELECT * FROM appointments")
     List<Appointment> getAllAppointments();
+
 }

@@ -34,6 +34,7 @@ public class AnimalDetails extends AppCompatActivity {
     EditText editEnterDate;
     EditText editModifyDate;
     EditText editCustAnimalID;
+    EditText getEditCustAnimalName;
 
     int animalID;
     String animalName;
@@ -68,6 +69,7 @@ public class AnimalDetails extends AppCompatActivity {
         editEnterDate = findViewById(R.id.editTextAnimalEnter);
         editModifyDate = findViewById(R.id.editTextAnimalModify);
         editCustAnimalID = findViewById(R.id.editTextAnimalCustID);
+
 
         animalID = getIntent().getIntExtra("animalID", -1);
         animalName = getIntent().getStringExtra("animalName");

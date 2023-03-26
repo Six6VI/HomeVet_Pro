@@ -4,7 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#8EC5B6"
     tools:context=".UI.CustomerList">
+
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerViewCustomer"
@@ -13,6 +15,7 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
 
     <Button
         android:id="@+id/custAdd"

@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#8EC5B6"
     tools:context=".UI.CustomerDetails">
 
     <ScrollView
@@ -168,6 +169,7 @@
                 android:singleLine="true"
                 android:hint="01-01-2023" />
         </LinearLayout>
+
 
         </LinearLayout>
 

@@ -67,6 +67,7 @@ public class CustomerAdapter extends RecyclerView.Adapter<CustomerAdapter.Custom
             String name = current.getCustomerName();
             holder.customerTextView.setText(name);
 
+
         }
         else {
             holder.customerTextView.setText("No Customers to Show");

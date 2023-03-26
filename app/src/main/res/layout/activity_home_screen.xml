@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#8EC5B6"
     tools:context=".UI.HomeScreen">
 
     <TextView
@@ -17,37 +18,13 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <RadioGroup
-        android:id="@+id/radioGroup2"
-        android:layout_width="249dp"
-        android:layout_height="55dp"
-        android:layout_marginTop="4dp"
-        android:checkedButton="@id/radioAll"
-        android:orientation="horizontal"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView2">
-
-        <RadioButton
-            android:id="@+id/radioAll"
-            android:layout_width="123dp"
-            android:layout_height="55dp"
-            android:text="All" />
-
-        <RadioButton
-            android:id="@+id/radioWeek"
-            android:layout_width="123dp"
-            android:layout_height="55dp"
-            android:text="Week" />
-    </RadioGroup>
-
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerView2"
+        android:id="@+id/recyclerViewHomescreen"
         android:layout_width="400dp"
         android:layout_height="403dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/radioGroup2" />
+        app:layout_constraintTop_toBottomOf="@+id/textView2" />
 
     <Button
         android:id="@+id/buttonExit"

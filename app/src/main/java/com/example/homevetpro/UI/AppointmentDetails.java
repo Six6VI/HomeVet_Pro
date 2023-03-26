@@ -9,6 +9,8 @@ import com.example.homevetpro.Database.Repository;
 import com.example.homevetpro.Entities.Appointment;
 import com.example.homevetpro.R;
 
+import java.time.LocalDate;
+
 public class AppointmentDetails extends AppCompatActivity {
 
     EditText editID;
@@ -19,6 +21,7 @@ public class AppointmentDetails extends AppCompatActivity {
     EditText editEnterDate;
     EditText editModifyDate;
     EditText editAppAnimalID;
+    EditText editAppCustID;
 
     int appID;
     String appDate;
@@ -28,6 +31,7 @@ public class AppointmentDetails extends AppCompatActivity {
     String appEnterDate;
     String appModifyDate;
     int appAnimalID;
+    int appCustID;
 
     Appointment appointment;
     Repository repository;
@@ -45,6 +49,7 @@ public class AppointmentDetails extends AppCompatActivity {
         editEnterDate=findViewById(R.id.editTextAppAdded);
         editModifyDate=findViewById(R.id.editTextAppModify);
         editAppAnimalID=findViewById(R.id.editTextAppAnimalID);
+        editAppCustID=findViewById(R.id.editTextAppCustID);
 
         appID = getIntent().getIntExtra("appID",-1);
         appDate = getIntent().getStringExtra("appDate");
@@ -54,11 +59,14 @@ public class AppointmentDetails extends AppCompatActivity {
         appEnterDate = getIntent().getStringExtra("appEnterDate");
         appModifyDate = getIntent().getStringExtra("appModifyDate");
         appAnimalID = getIntent().getIntExtra("appAnimalID",-1);
+        appCustID = getIntent().getIntExtra("appCustID", -1);
+
 
         String sAppID = String.valueOf(appID);
         String sAppDuration = String.valueOf(appDuration);
         String sAppCost = String.valueOf(appCost);
         String sAppAnimalID = String.valueOf(appAnimalID);
+        String sAppCustID = String.valueOf(appCustID);
 
         editID.setText(sAppID);
         editDate.setText(appDate);
@@ -68,6 +76,7 @@ public class AppointmentDetails extends AppCompatActivity {
         editEnterDate.setText(appEnterDate);;
         editModifyDate.setText(appModifyDate);
         editAppAnimalID.setText(sAppAnimalID);
+        editAppCustID.setText(sAppCustID);
 
         repository = new Repository(getApplication());
 
