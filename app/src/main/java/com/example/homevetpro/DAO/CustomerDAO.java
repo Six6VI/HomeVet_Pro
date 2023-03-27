@@ -23,6 +23,6 @@ public interface CustomerDAO {
     void delete(Customer customer);
     @Query("SELECT * FROM customers")
     List<Customer> getAllCustomers();
-    @Query("SELECT customerName from customers where customerID=:id")
-    String getNameByID(int id);
+    @Query("SELECT customerID from customers where customerName=:name")
+    int getIDByName(String name);
 }

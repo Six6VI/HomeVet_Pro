@@ -6,6 +6,8 @@ import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.RadioButton;
 import android.widget.TextView;
 
@@ -24,24 +26,33 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AppointmentAdapter extends RecyclerView.Adapter<AppointmentAdapter.AppointmentViewHolder>{
+public class AppointmentAdapter extends RecyclerView.Adapter<AppointmentAdapter.AppointmentViewHolder> implements Filterable {
 
+    private List<Appointment> appointmentList;
+    private final List<Appointment> appointmentListFull;
+
+    private final Context context;
+    private final LayoutInflater mInflater;
+
+    public AppointmentAdapter(Context context, List<Appointment> appointmentList){
+        mInflater= LayoutInflater.from(context);
+        this.context=context;
+        this.appointmentList=appointmentList;
+        appointmentListFull=new ArrayList<>(appointmentList);
+    }
 
     class AppointmentViewHolder extends RecyclerView.ViewHolder{
-
-        private final TextView appCustTextView;
-        private final TextView appAnimaltTextView;
         private final TextView appDateTextView;
+
         private AppointmentViewHolder(View itemview){
             super(itemview);
-            appCustTextView=itemview.findViewById(R.id.appCustTextView);
-            appAnimaltTextView=itemview.findViewById(R.id.appAnimalTextView);
             appDateTextView=itemview.findViewById(R.id.appDateTextView);
             itemview.setOnClickListener(new View.OnClickListener() {
+
                 @Override
                 public void onClick(View v) {
                     int position=getAdapterPosition();
-                    final Appointment current = mAppointment.get(position);
+                    final Appointment current = appointmentList.get(position);
                     Intent intent=new Intent(context, AppointmentDetails.class);
                     intent.putExtra("appID", current.getAppointmentID());
                     intent.putExtra("appDate", current.getAppointmentDate());
@@ -52,22 +63,11 @@ public class AppointmentAdapter extends RecyclerView.Adapter<AppointmentAdapter.
                     intent.putExtra("appModifyDate", current.getAppModifyDate());
                     intent.putExtra("appAnimalID", current.getAppAnimalID());
                     intent.putExtra("appCustID",current.getAppCustID());
-
                     context.startActivity(intent);
 
                 }
             });
         }
-    }
-
-    private static List<Appointment> mAppointment;
-    private static List<Customer> mCustomer;
-    private Repository repository;
-    private final Context context;
-    private final LayoutInflater mInflater;
-    public AppointmentAdapter(Context context){
-        mInflater= LayoutInflater.from(context);
-        this.context=context;
     }
 
     @NonNull
@@ -81,31 +81,57 @@ public class AppointmentAdapter extends RecyclerView.Adapter<AppointmentAdapter.
 
     @Override
     public void onBindViewHolder(@NonNull AppointmentAdapter.AppointmentViewHolder holder, int position) {
-        if (mAppointment!=null) {
-            Appointment current = mAppointment.get(position);
-            String customer = String.valueOf(current.getAppCustID());
-            String animal = (" " + String.valueOf(current.getAppAnimalID()));
-            String date = (" " + current.getAppointmentDate());
-
-
-            holder.appCustTextView.setText(customer);
-            holder.appAnimaltTextView.setText(animal);
-            holder.appDateTextView.setText(date);
+        if (appointmentList!=null) {
+            Appointment current = appointmentList.get(position);
+            holder.appDateTextView.setText(current.getAppointmentDate());
 
         }
         else {
-            holder.appCustTextView.setText("No Appointments to Show");
+            holder.appDateTextView.setText("No Appointments to Show");
         }
 
     }
 
     @Override
     public int getItemCount() {
-        return mAppointment.size();
+        return appointmentList.size();
     }
 
-    public void setAppointments(List<Appointment> appointment){
-        mAppointment=appointment;
+    public void setAppointments(List<Appointment> appointmentList){
+        this.appointmentList=appointmentList;
         notifyDataSetChanged();
     }
+
+    public Filter getFilter(){
+        return appFilter;
+    }
+    private Filter appFilter = new Filter() {
+        @Override
+        protected FilterResults performFiltering(CharSequence constraint) {
+            List<Appointment> filterdApps = new ArrayList<>();
+            FilterResults results = new FilterResults();
+
+            if(constraint==null || constraint.length() == 0){
+                filterdApps.addAll(appointmentListFull);
+            }else{
+                String filterPattern = constraint.toString().toLowerCase().trim();
+
+                for(Appointment item: appointmentListFull){
+                    if(item.getAppointmentDate().toLowerCase().contains(filterPattern)){
+                        filterdApps.add(item);
+                    }
+                }
+            }
+            results.values = filterdApps;
+            return results;
+        }
+
+        @Override
+        protected void publishResults(CharSequence constraint, FilterResults results) {
+            appointmentList.clear();
+            appointmentList.addAll((List) results.values);
+            notifyDataSetChanged();
+
+        }
+    };
 }

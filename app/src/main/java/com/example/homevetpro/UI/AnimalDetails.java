@@ -51,6 +51,7 @@ public class AnimalDetails extends AppCompatActivity {
     Animal animal;
     Repository repository;
 
+    List<Appointment> appointmentList;
 
 
     @Override
@@ -75,9 +76,9 @@ public class AnimalDetails extends AppCompatActivity {
         animalName = getIntent().getStringExtra("animalName");
         animalType = getIntent().getStringExtra("animalType");
         animalGender = getIntent().getStringExtra("animalGender");
-        animalBirthday= getIntent().getStringExtra("animalBirthday");
-        animalColor=getIntent().getStringExtra("animalColor");
-        animalWeight = getIntent().getIntExtra("animalWeight",0);
+        animalBirthday = getIntent().getStringExtra("animalBirthday");
+        animalColor = getIntent().getStringExtra("animalColor");
+        animalWeight = getIntent().getIntExtra("animalWeight", 0);
         animalNotes = getIntent().getStringExtra("animalNotes");
         animalEnterDate = getIntent().getStringExtra("animalEnterDate");
         animalModifyDate = getIntent().getStringExtra("animalModifyDate");
@@ -85,14 +86,14 @@ public class AnimalDetails extends AppCompatActivity {
 
         String aniID = String.valueOf(animalID);
         String aniCustID = String.valueOf(animalCustID);
-        String aniWeight =String.valueOf(animalWeight);
+        String aniWeight = String.valueOf(animalWeight);
 
         editID.setText(aniID);
         editName.setText(animalName);
         editType.setText(animalType);
-        editGender.setText(animalGender);;
+        editGender.setText(animalGender);
         editBirthday.setText(animalBirthday);
-        editColor.setText(animalColor);;
+        editColor.setText(animalColor);
         editWeight.setText(aniWeight);
         editNotes.setText(animalNotes);
         editEnterDate.setText(animalEnterDate);
@@ -100,10 +101,11 @@ public class AnimalDetails extends AppCompatActivity {
         editCustAnimalID.setText(aniCustID);
 
         repository = new Repository(getApplication());
+        appointmentList = repository.getmAllAppointments();
 
         RecyclerView recyclerView = findViewById(R.id.recyclerViewAppointment);
         repository = new Repository(getApplication());
-        final AppointmentAdapter appointmentAdapter = new AppointmentAdapter(this);
+        final AppointmentAdapter appointmentAdapter = new AppointmentAdapter(this, appointmentList);
         recyclerView.setAdapter(appointmentAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         List<Appointment> filteredApp = new ArrayList<>();
@@ -118,14 +120,35 @@ public class AnimalDetails extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (animalID == -1) {
-                    animal = new Animal(0, editName.getText().toString(), editType.getText().toString(), editGender.getText().toString(), editBirthday.getText().toString(), editColor.getText().toString(), Integer.valueOf(editWeight.getText().toString()), editNotes.getText().toString(), editEnterDate.getText().toString(),editModifyDate.getText().toString(),Integer.valueOf(editCustAnimalID.getText().toString()));
+                    animal = new Animal(0, editName.getText().toString(), editType.getText().toString(), editGender.getText().toString(), editBirthday.getText().toString(), editColor.getText().toString(), Integer.valueOf(editWeight.getText().toString()), editNotes.getText().toString(), editEnterDate.getText().toString(), editModifyDate.getText().toString(), Integer.valueOf(editCustAnimalID.getText().toString()));
                     repository.insert(animal);
                 } else {
-                    animal = new  Animal(animalID, editName.getText().toString(), editType.getText().toString(), editGender.getText().toString(), editBirthday.getText().toString(), editColor.getText().toString(), Integer.valueOf(editWeight.getText().toString()), editNotes.getText().toString(), editEnterDate.getText().toString(),editModifyDate.getText().toString(),Integer.valueOf(editCustAnimalID.getText().toString()));
+                    animal = new Animal(animalID, editName.getText().toString(), editType.getText().toString(), editGender.getText().toString(), editBirthday.getText().toString(), editColor.getText().toString(), Integer.valueOf(editWeight.getText().toString()), editNotes.getText().toString(), editEnterDate.getText().toString(), editModifyDate.getText().toString(), Integer.valueOf(editCustAnimalID.getText().toString()));
                     repository.update(animal);
                 }
                 Intent intent = new Intent(AnimalDetails.this, AnimalList.class);
                 startActivity(intent);
+            }
+        });
+        Button add = findViewById(R.id.buttonAnimalAddApp);
+        add.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (animalID == -1) {
+                    animal = new Animal(0, editName.getText().toString(), editType.getText().toString(), editGender.getText().toString(), editBirthday.getText().toString(), editColor.getText().toString(), Integer.valueOf(editWeight.getText().toString()), editNotes.getText().toString(), editEnterDate.getText().toString(), editModifyDate.getText().toString(), Integer.valueOf(editCustAnimalID.getText().toString()));
+                    repository.insert(animal);
+                } else {
+                    animal = new Animal(animalID, editName.getText().toString(), editType.getText().toString(), editGender.getText().toString(), editBirthday.getText().toString(), editColor.getText().toString(), Integer.valueOf(editWeight.getText().toString()), editNotes.getText().toString(), editEnterDate.getText().toString(), editModifyDate.getText().toString(), Integer.valueOf(editCustAnimalID.getText().toString()));
+                    repository.update(animal);
+                }
+
+                int animalID = Integer.parseInt(editID.getText().toString());
+                int animalCustomerID =Integer.parseInt(editCustAnimalID.getText().toString());
+                Intent intent = new Intent(AnimalDetails.this, AnimalList.class);
+                intent.putExtra("appAnimalID", animalID);
+                intent.putExtra("appCustID", animalCustomerID);
+                startActivity(intent);
+
             }
         });
 

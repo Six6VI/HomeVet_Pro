@@ -39,6 +39,8 @@ public class CustomerDetails extends AppCompatActivity {
     Customer customer;
     Repository repository;
 
+    List<Animal> animalList;
+
 
 
     @Override
@@ -75,14 +77,14 @@ public class CustomerDetails extends AppCompatActivity {
 
         RecyclerView recyclerView = findViewById(R.id.recyclerViewAnimals);
         repository = new Repository(getApplication());
-        final AnimalAdapter animalAdapter = new AnimalAdapter(this);
+        animalList = repository.getmAllAnimals();
+        final AnimalAdapter animalAdapter = new AnimalAdapter(this,animalList);
         recyclerView.setAdapter(animalAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         List<Animal> filteredAnimals = new ArrayList<>();
         for (Animal p : repository.getmAllAnimals()) {
             if (p.getAnimalCustID() == customerID) filteredAnimals.add(p);
         }
-
         animalAdapter.setAnimals(filteredAnimals);
 
         Button button = findViewById(R.id.buttonCustomerSave);
@@ -113,9 +115,13 @@ public class CustomerDetails extends AppCompatActivity {
                     repository.update(customer);
                 }
 
-                int id = Integer.parseInt(editID.getText().toString());
+                String custName = customerName;
+
+               // int id = Integer.parseInt(editID.getText().toString());
+               // List<Customer> customers = repository.getmAllCustomers();
+                int animalCustomerID = repository.getmIDByName(custName);
                 Intent intent = new Intent(v.getContext(),AnimalDetails.class);
-                intent.putExtra("animalCustID",id);
+                intent.putExtra("animalCustID", animalCustomerID);
                 startActivity(intent);
 
             }

@@ -1,12 +1,16 @@
 package com.example.homevetpro.UI;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SearchView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.RadioButton;
 
@@ -21,21 +25,28 @@ import java.util.List;
 
 public class HomeScreen extends AppCompatActivity {
 
-    private Repository repository;
-    RadioButton radioAll;
-    RadioButton radioWeek;
+    Repository repository;
+    RecyclerView recyclerView;
+
+    List<Appointment> appointmentList;
+    AppointmentAdapter appointmentAdapter;
+    int appID;
+    SearchView searchView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_screen);
-        RecyclerView recyclerView =findViewById(R.id.recyclerViewHomescreen);
-        final AppointmentAdapter appointmentAdapter=new AppointmentAdapter(this);
-        recyclerView.setAdapter(appointmentAdapter);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        repository=new Repository(getApplication());
-        List<Appointment> allAppointments =repository.getmAllAppointments();
-        appointmentAdapter.setAppointments(allAppointments);
+        repository = new Repository(getApplication());
+
+        appointmentList = repository.getmAllAppointments();
+        appointmentAdapter = new AppointmentAdapter(this,appointmentList);
+        appID=getIntent().getIntExtra("appID",-1);
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        appRecyclerView();
+
         Button customers = findViewById(R.id.buttonCustomers);
         Button animals = findViewById(R.id.buttonAnimals);
         Button appointments =findViewById(R.id.buttonAppointments);
@@ -78,4 +89,37 @@ public class HomeScreen extends AppCompatActivity {
             }
         });
     }
+
+    public void appRecyclerView() {
+
+        recyclerView = findViewById(R.id.recyclerViewHomescreen);
+        recyclerView.setAdapter(appointmentAdapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+    }
+
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.search_menu, menu);
+
+        MenuItem searchItem = menu.findItem(R.id.actionSearch);
+        SearchView searchView = (SearchView) searchItem.getActionView();
+        searchView.setImeOptions(EditorInfo.IME_ACTION_DONE);
+        searchView.setQueryHint("Type here to search");
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                appointmentAdapter.getFilter().filter(newText);
+                return false;
+            }
+        });
+
+        return true;
+    }
+
+
+
 }
