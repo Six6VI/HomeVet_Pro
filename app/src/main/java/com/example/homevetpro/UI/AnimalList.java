@@ -44,20 +44,12 @@ public class AnimalList extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         animalRecyclerView();
 
-        Button addAnimal = findViewById(R.id.animalAdd);
         Button exitAnimal =findViewById(R.id.animalExit);
         exitAnimal.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent2 = new Intent(AnimalList.this, HomeScreen.class);
                 startActivity(intent2);
-            }
-        });
-        addAnimal.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(AnimalList.this, AnimalDetails.class);
-                startActivity(intent);
             }
         });
     }

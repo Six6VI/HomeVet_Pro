@@ -45,7 +45,7 @@ public class CustomerAdapter extends RecyclerView.Adapter<CustomerAdapter.Custom
                 public void onClick(View v) {
                     int position=getAdapterPosition();
                     final Customer current = customerList.get(position);
-                    Intent intent=new Intent(context, CustomerDetails.class);
+                    Intent intent=new Intent(context, CustomerAdd.class);
                     intent.putExtra("customerID", current.getCustomerID());
                     intent.putExtra("customerName", current.getCustomerName());
                     intent.putExtra("customerAddress", current.getCustomerAddress());

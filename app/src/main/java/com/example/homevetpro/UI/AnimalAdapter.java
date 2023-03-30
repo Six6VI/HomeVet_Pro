@@ -45,7 +45,7 @@ public class AnimalAdapter extends RecyclerView.Adapter<AnimalAdapter.AnimalView
                 public void onClick(View v) {
                     int position = getAdapterPosition();
                     final Animal current = animalList.get(position);
-                    Intent intent = new Intent(context, AnimalDetails.class);
+                    Intent intent = new Intent(context, AnimalAdd.class);
                     intent.putExtra("animalID", current.getAnimalID());
                     intent.putExtra("animalName", current.getAnimalName());
                     intent.putExtra("animalType", current.getAnimalType());

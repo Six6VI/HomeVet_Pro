@@ -75,11 +75,8 @@ public class CustomerList extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
     }
 
-
-
-
-
     public boolean onCreateOptionsMenu(Menu menu) {
+
         getMenuInflater().inflate(R.menu.search_menu, menu);
 
         MenuItem searchItem = menu.findItem(R.id.actionSearch);

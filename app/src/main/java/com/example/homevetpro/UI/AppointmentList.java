@@ -44,20 +44,12 @@ public class AppointmentList extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         appRecyclerView();
 
-        Button addCustomer = findViewById(R.id.appointmentAdd);
         Button exitCustomer = findViewById(R.id.appointmentExit);
         exitCustomer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent2 = new Intent(AppointmentList.this, HomeScreen.class);
                 startActivity(intent2);
-            }
-        });
-        addCustomer.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(AppointmentList.this, AppointmentDetails.class);
-                startActivity(intent);
             }
         });
     }

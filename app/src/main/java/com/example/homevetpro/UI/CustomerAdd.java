@@ -1,7 +1,6 @@
 package com.example.homevetpro.UI;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.SearchView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -10,22 +9,19 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.homevetpro.Database.Repository;
 import com.example.homevetpro.Entities.Animal;
-import com.example.homevetpro.Entities.Appointment;
 import com.example.homevetpro.Entities.Customer;
-import com.example.homevetpro.Entities.User;
 import com.example.homevetpro.R;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class CustomerDetails extends AppCompatActivity {
+public class CustomerAdd extends AppCompatActivity {
 
     EditText editID;
     EditText editName;
@@ -50,19 +46,20 @@ public class CustomerDetails extends AppCompatActivity {
     List<Animal> animalList;
 
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_customer_details);
-        editID = findViewById(R.id.editTextCustomerID);
-        editName = findViewById(R.id.editTextCustomerName);
-        editAddress = findViewById(R.id.editTextCustAdd);
-        editZip = findViewById(R.id.editTextCustZip);
-        editPhone = findViewById(R.id.editTextCustPhone);
-        editEnterDate = findViewById(R.id.editTextCustAdded);
-        editModifyDate = findViewById(R.id.editTextCustModify);
+        setContentView(R.layout.activity_customer_add);
+        editID=findViewById(R.id.editTextCustomerID);
+        editName=findViewById(R.id.editTextCustomerName);
+        editAddress=findViewById(R.id.editTextCustAdd);
+        editZip=findViewById(R.id.editTextCustZip);
+        editPhone=findViewById(R.id.editTextCustPhone);
+        editEnterDate=findViewById(R.id.editTextCustAdded);
+        editModifyDate=findViewById(R.id.editTextCustModify);
 
-        customerID = getIntent().getIntExtra("customerID", -1);
+        customerID = getIntent().getIntExtra("customerID",-1);
         customerName = getIntent().getStringExtra("customerName");
         customerAddress = getIntent().getStringExtra("customerAddress");
         customerZip = getIntent().getStringExtra("customerZip");
@@ -85,7 +82,7 @@ public class CustomerDetails extends AppCompatActivity {
         RecyclerView recyclerView = findViewById(R.id.recyclerViewAnimals);
         repository = new Repository(getApplication());
         animalList = repository.getmAllAnimals();
-        final AnimalAdapter animalAdapter = new AnimalAdapter(this, animalList);
+        final AnimalAdapter animalAdapter = new AnimalAdapter(this,animalList);
         recyclerView.setAdapter(animalAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         List<Animal> filteredAnimals = new ArrayList<>();
@@ -105,22 +102,36 @@ public class CustomerDetails extends AppCompatActivity {
                     customer = new Customer(customerID, editName.getText().toString(), editAddress.getText().toString(), editZip.getText().toString(), editPhone.getText().toString(), editEnterDate.getText().toString(), editModifyDate.getText().toString());
                     repository.update(customer);
                 }
-                Intent intent = new Intent(CustomerDetails.this, CustomerList.class);
+                Intent intent = new Intent(CustomerAdd.this, CustomerList.class);
                 startActivity(intent);
             }
         });
-        Button delete = findViewById(R.id.buttonCustDelete);
-        delete.setOnClickListener(new View.OnClickListener() {
+
+        Button add = findViewById(R.id.buttonCustAddAnimal);
+        add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (customerID == -1) {
+                    customer = new Customer(0, editName.getText().toString(), editAddress.getText().toString(), editZip.getText().toString(), editPhone.getText().toString(), editEnterDate.getText().toString(), editModifyDate.getText().toString());
+                    repository.insert(customer);
+                } else {
+                    customer = new Customer(customerID, editName.getText().toString(), editAddress.getText().toString(), editZip.getText().toString(), editPhone.getText().toString(), editEnterDate.getText().toString(), editModifyDate.getText().toString());
+                    repository.update(customer);
+                }
 
-                Intent intent = new Intent(CustomerDetails.this, CustomerList.class);
+                String custName = customerName;
+
+                // int id = Integer.parseInt(editID.getText().toString());
+                // List<Customer> customers = repository.getmAllCustomers();
+                int animalCustomerID = repository.getmIDByName(custName);
+                Intent intent = new Intent(v.getContext(),AnimalDetails.class);
+                intent.putExtra("animalCustID", animalCustomerID);
                 startActivity(intent);
+
             }
         });
 
     }
-
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.home_screen, menu);
 
@@ -131,16 +142,24 @@ public class CustomerDetails extends AppCompatActivity {
         switch (item.getItemId()) {
             case R.id.home:
 
-                Intent intent = new Intent(CustomerDetails.this, HomeScreen.class);
+                Intent intent = new Intent(CustomerAdd.this, HomeScreen.class);
                 startActivity(intent);
 
                 return true;
+
+            case R.id.delete:
+
+                for (Customer customer : repository.getmAllCustomers()) {
+                    if (customer.getCustomerID() == customerID)
+                        current = customer;
+                }
+                    repository.delete(current);
+                    Toast.makeText(CustomerAdd.this, current.getCustomerName() + " was deleted", Toast.LENGTH_LONG).show();
+                    Intent intent2 = new Intent(CustomerAdd.this, CustomerList.class);
+                    startActivity(intent2);
+
+                break;
         }
         return super.onOptionsItemSelected(item);
     }
-
 }
-
-
-
-

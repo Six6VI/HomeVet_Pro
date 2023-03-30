@@ -2,7 +2,10 @@ package com.example.homevetpro.UI;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.EditText;
 
 import com.example.homevetpro.Database.Repository;
@@ -82,5 +85,22 @@ public class AppointmentDetails extends AppCompatActivity {
 
 
 
+    }
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.home_screen, menu);
+
+        return true;
+    }
+
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.home:
+
+                Intent intent = new Intent(AppointmentDetails.this, HomeScreen.class);
+                startActivity(intent);
+
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

@@ -51,6 +51,16 @@
                 android:value="" />
         </activity>
         <activity
+            android:name=".UI.AnimalAdd"
+            android:exported="false"
+            android:label="Animal Details"
+            android:parentActivityName=".UI.AnimalList"
+            android:windowSoftInputMode="adjustPan">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
             android:name=".UI.AnimalDetails"
             android:exported="false"
             android:label="Animal Details"
@@ -65,6 +75,16 @@
             android:exported="false"
             android:label="Animals"
             android:parentActivityName=".UI.HomeScreen">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
+            android:name=".UI.CustomerAdd"
+            android:exported="false"
+            android:label="Customer Details"
+            android:parentActivityName=".UI.CustomerList"
+            android:windowSoftInputMode="adjustPan">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />

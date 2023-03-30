@@ -23,7 +23,7 @@ import org.w3c.dom.Text;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AnimalDetails extends AppCompatActivity {
+public class AnimalAdd extends AppCompatActivity {
 
     EditText editID;
     EditText editName;
@@ -59,7 +59,7 @@ public class AnimalDetails extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_animal_details);
+        setContentView(R.layout.activity_animal_add);
 
         editID = findViewById(R.id.editTextAnimalID);
         editName = findViewById(R.id.editTextAnimalName);
@@ -128,12 +128,12 @@ public class AnimalDetails extends AppCompatActivity {
                     animal = new Animal(animalID, editName.getText().toString(), editType.getText().toString(), editGender.getText().toString(), editBirthday.getText().toString(), editColor.getText().toString(), Integer.valueOf(editWeight.getText().toString()), editNotes.getText().toString(), editEnterDate.getText().toString(), editModifyDate.getText().toString(), Integer.valueOf(editCustAnimalID.getText().toString()));
                     repository.update(animal);
                 }
-                Intent intent = new Intent(AnimalDetails.this, AnimalList.class);
+                Intent intent = new Intent(AnimalAdd.this, AnimalList.class);
                 startActivity(intent);
             }
         });
-        Button delete = findViewById(R.id.buttonAnimalDelete);
-        delete.setOnClickListener(new View.OnClickListener() {
+        Button add = findViewById(R.id.buttonAnimalAddApp);
+        add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (animalID == -1) {
@@ -143,16 +143,14 @@ public class AnimalDetails extends AppCompatActivity {
                     animal = new Animal(animalID, editName.getText().toString(), editType.getText().toString(), editGender.getText().toString(), editBirthday.getText().toString(), editColor.getText().toString(), Integer.valueOf(editWeight.getText().toString()), editNotes.getText().toString(), editEnterDate.getText().toString(), editModifyDate.getText().toString(), Integer.valueOf(editCustAnimalID.getText().toString()));
                     repository.update(animal);
                 }
-                Intent intent = new Intent(AnimalDetails.this, AnimalList.class);
+
+                int animalID = Integer.parseInt(editID.getText().toString());
+                int animalCustomerID =Integer.parseInt(editCustAnimalID.getText().toString());
+                Intent intent = new Intent(AnimalAdd.this, AppointmentDetails.class);
+                intent.putExtra("appAnimalID", animalID);
+                intent.putExtra("appCustID", animalCustomerID);
                 startActivity(intent);
-            }
-        });
-        Button home = findViewById(R.id.buttonAnimalHome);
-        home.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(AnimalDetails.this, HomeScreen.class);
-                startActivity(intent);
+
             }
         });
 
@@ -168,7 +166,7 @@ public class AnimalDetails extends AppCompatActivity {
         switch (item.getItemId()) {
             case R.id.home:
 
-                Intent intent = new Intent(AnimalDetails.this, HomeScreen.class);
+                Intent intent = new Intent(AnimalAdd.this, HomeScreen.class);
                 startActivity(intent);
 
                 return true;
