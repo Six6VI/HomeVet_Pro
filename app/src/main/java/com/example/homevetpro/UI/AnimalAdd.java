@@ -11,6 +11,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.example.homevetpro.Database.Repository;
 import com.example.homevetpro.Entities.Animal;
@@ -51,6 +52,7 @@ public class AnimalAdd extends AppCompatActivity {
     int animalCustID;
 
     Animal animal;
+    Animal current;
     Repository repository;
 
     List<Appointment> appointmentList;
@@ -62,6 +64,7 @@ public class AnimalAdd extends AppCompatActivity {
         setContentView(R.layout.activity_animal_add);
 
         editID = findViewById(R.id.editTextAnimalID);
+        editID.setEnabled(false);
         editName = findViewById(R.id.editTextAnimalName);
         editType = findViewById(R.id.editTextAnimalType);
         editGender = findViewById(R.id.editTextAnimalGender);
@@ -72,6 +75,7 @@ public class AnimalAdd extends AppCompatActivity {
         editEnterDate = findViewById(R.id.editTextAnimalEnter);
         editModifyDate = findViewById(R.id.editTextAnimalModify);
         editCustAnimalID = findViewById(R.id.editTextAnimalCustID);
+        editCustAnimalID.setEnabled(false);
 
 
         animalID = getIntent().getIntExtra("animalID", -1);
@@ -170,6 +174,19 @@ public class AnimalAdd extends AppCompatActivity {
                 startActivity(intent);
 
                 return true;
+
+            case R.id.delete:
+
+                for (Animal animal : repository.getmAllAnimals()) {
+                    if (animal.getAnimalID() == animalID)
+                        current = animal;
+                }
+                repository.delete(current);
+                Toast.makeText(AnimalAdd.this, current.getAnimalName() + " was deleted", Toast.LENGTH_LONG).show();
+                Intent intent2 = new Intent(AnimalAdd.this, AnimalList.class);
+                startActivity(intent2);
+
+                break;
         }
         return super.onOptionsItemSelected(item);
     }

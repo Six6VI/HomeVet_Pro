@@ -25,4 +25,6 @@ public interface CustomerDAO {
     List<Customer> getAllCustomers();
     @Query("SELECT customerID from customers where customerName=:name")
     int getIDByName(String name);
+    @Query("SELECT customerName from customers where customerID=:id")
+    String getNameByID(int id);
 }

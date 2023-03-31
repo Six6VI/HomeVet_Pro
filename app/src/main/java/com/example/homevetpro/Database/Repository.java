@@ -29,6 +29,7 @@ public class Repository {
     private List<Appointment> mAllAppointments;
     private List<Report> mAllReports;
     private int mCustID;
+    private String mCustName;
 
     private static int NUMBER_OF_THREADS=4;
     static final ExecutorService databaseExecutor= Executors.newFixedThreadPool(NUMBER_OF_THREADS);
@@ -134,6 +135,10 @@ public class Repository {
             e.printStackTrace();
         }
         return mCustID;
+
+    }
+    public String getmNameByID(int id){
+        return mCustomerDAO.getNameByID(id);
 
     }
 

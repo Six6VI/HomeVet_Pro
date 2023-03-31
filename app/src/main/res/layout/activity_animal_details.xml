@@ -82,7 +82,7 @@
                     android:textSize="20sp"
                     android:textStyle="bold" />
 
-                <EditText
+               <EditText
                     android:id="@+id/editTextAnimalType"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -276,7 +276,7 @@
         android:id="@+id/buttonAnimalSave"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="44dp"
+        android:layout_marginStart="108dp"
         android:layout_marginBottom="48dp"
         android:text="Save"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -286,9 +286,9 @@
         android:id="@+id/buttonAnimalDelete"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="160dp"
+        android:layout_marginEnd="108dp"
         android:layout_marginBottom="48dp"
-        android:text="Delete"
+        android:text="Cancel"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
@@ -309,13 +309,5 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView3" />
-
-    <Button
-        android:id="@+id/buttonAnimalHome"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Home"
-        tools:layout_editor_absoluteX="286dp"
-        tools:layout_editor_absoluteY="636dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

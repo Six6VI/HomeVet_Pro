@@ -55,6 +55,7 @@ public class CustomerDetails extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_customer_details);
         editID = findViewById(R.id.editTextCustomerID);
+        editID.setEnabled(false);
         editName = findViewById(R.id.editTextCustomerName);
         editAddress = findViewById(R.id.editTextCustAdd);
         editZip = findViewById(R.id.editTextCustZip);
@@ -122,14 +123,14 @@ public class CustomerDetails extends AppCompatActivity {
     }
 
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.home_screen, menu);
+        getMenuInflater().inflate(R.menu.basic_home, menu);
 
         return true;
     }
 
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.home:
+            case R.id.home_basic:
 
                 Intent intent = new Intent(CustomerDetails.this, HomeScreen.class);
                 startActivity(intent);

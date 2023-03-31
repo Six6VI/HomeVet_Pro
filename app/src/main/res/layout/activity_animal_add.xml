@@ -276,7 +276,7 @@
         android:id="@+id/buttonAnimalSave"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
+        android:layout_marginStart="52dp"
         android:layout_marginBottom="48dp"
         android:text="Save"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -286,21 +286,11 @@
         android:id="@+id/buttonAnimalAddApp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
+        android:layout_marginStart="36dp"
         android:layout_marginBottom="48dp"
         android:text="Add Appointment"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@+id/buttonAnimalSave" />
-
-    <Button
-        android:id="@+id/buttonAnimalDelete"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
-        android:layout_marginBottom="48dp"
-        android:text="Delete"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
 
     <TextView
         android:id="@+id/textView3"

@@ -52,7 +52,6 @@ public class AnimalDetails extends AppCompatActivity {
 
     Animal animal;
     Repository repository;
-
     List<Appointment> appointmentList;
 
 
@@ -62,6 +61,7 @@ public class AnimalDetails extends AppCompatActivity {
         setContentView(R.layout.activity_animal_details);
 
         editID = findViewById(R.id.editTextAnimalID);
+        editID.setEnabled(false);
         editName = findViewById(R.id.editTextAnimalName);
         editType = findViewById(R.id.editTextAnimalType);
         editGender = findViewById(R.id.editTextAnimalGender);
@@ -72,6 +72,7 @@ public class AnimalDetails extends AppCompatActivity {
         editEnterDate = findViewById(R.id.editTextAnimalEnter);
         editModifyDate = findViewById(R.id.editTextAnimalModify);
         editCustAnimalID = findViewById(R.id.editTextAnimalCustID);
+        editCustAnimalID.setEnabled(false);
 
 
         animalID = getIntent().getIntExtra("animalID", -1);
@@ -136,22 +137,8 @@ public class AnimalDetails extends AppCompatActivity {
         delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (animalID == -1) {
-                    animal = new Animal(0, editName.getText().toString(), editType.getText().toString(), editGender.getText().toString(), editBirthday.getText().toString(), editColor.getText().toString(), Integer.valueOf(editWeight.getText().toString()), editNotes.getText().toString(), editEnterDate.getText().toString(), editModifyDate.getText().toString(), Integer.valueOf(editCustAnimalID.getText().toString()));
-                    repository.insert(animal);
-                } else {
-                    animal = new Animal(animalID, editName.getText().toString(), editType.getText().toString(), editGender.getText().toString(), editBirthday.getText().toString(), editColor.getText().toString(), Integer.valueOf(editWeight.getText().toString()), editNotes.getText().toString(), editEnterDate.getText().toString(), editModifyDate.getText().toString(), Integer.valueOf(editCustAnimalID.getText().toString()));
-                    repository.update(animal);
-                }
-                Intent intent = new Intent(AnimalDetails.this, AnimalList.class);
-                startActivity(intent);
-            }
-        });
-        Button home = findViewById(R.id.buttonAnimalHome);
-        home.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(AnimalDetails.this, HomeScreen.class);
+
+                Intent intent = new Intent(AnimalDetails.this, CustomerList.class);
                 startActivity(intent);
             }
         });
@@ -159,14 +146,14 @@ public class AnimalDetails extends AppCompatActivity {
     }
 
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.home_screen, menu);
+        getMenuInflater().inflate(R.menu.basic_home, menu);
 
         return true;
     }
 
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.home:
+            case R.id.home_basic:
 
                 Intent intent = new Intent(AnimalDetails.this, HomeScreen.class);
                 startActivity(intent);

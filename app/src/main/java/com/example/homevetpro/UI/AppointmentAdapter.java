@@ -30,6 +30,8 @@ public class AppointmentAdapter extends RecyclerView.Adapter<AppointmentAdapter.
 
     private List<Appointment> appointmentList;
     private final List<Appointment> appointmentListFull;
+    Repository repository;
+    String customerName;
 
     private final Context context;
     private final LayoutInflater mInflater;
@@ -42,10 +44,13 @@ public class AppointmentAdapter extends RecyclerView.Adapter<AppointmentAdapter.
     }
 
     class AppointmentViewHolder extends RecyclerView.ViewHolder{
-        private final TextView appDateTextView;
+
+        private  TextView appDateTextView;
+
 
         private AppointmentViewHolder(View itemview){
             super(itemview);
+
             appDateTextView=itemview.findViewById(R.id.appDateTextView);
             itemview.setOnClickListener(new View.OnClickListener() {
 
@@ -80,11 +85,11 @@ public class AppointmentAdapter extends RecyclerView.Adapter<AppointmentAdapter.
 
 
     @Override
-    public void onBindViewHolder(@NonNull AppointmentAdapter.AppointmentViewHolder holder, int position) {
-        if (appointmentList!=null) {
-            Appointment current = appointmentList.get(position);
-            holder.appDateTextView.setText(current.getAppointmentDate());
+    public void onBindViewHolder(@NonNull AppointmentViewHolder holder, int position) {
 
+        if (appointmentList != null) {
+            Appointment currentApp = appointmentList.get(position);
+            holder.appDateTextView.setText(currentApp.getAppointmentDate());
         }
         else {
             holder.appDateTextView.setText("No Appointments to Show");

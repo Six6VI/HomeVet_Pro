@@ -52,6 +52,7 @@ public class CustomerAdd extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_customer_add);
         editID=findViewById(R.id.editTextCustomerID);
+        editID.setEnabled(false);
         editName=findViewById(R.id.editTextCustomerName);
         editAddress=findViewById(R.id.editTextCustAdd);
         editZip=findViewById(R.id.editTextCustZip);
@@ -121,11 +122,11 @@ public class CustomerAdd extends AppCompatActivity {
 
                 String custName = customerName;
 
-                // int id = Integer.parseInt(editID.getText().toString());
+                int id = Integer.parseInt(editID.getText().toString());
                 // List<Customer> customers = repository.getmAllCustomers();
-                int animalCustomerID = repository.getmIDByName(custName);
+                //int animalCustomerID = repository.getmIDByName(custName);
                 Intent intent = new Intent(v.getContext(),AnimalDetails.class);
-                intent.putExtra("animalCustID", animalCustomerID);
+                intent.putExtra("animalCustID", id);
                 startActivity(intent);
 
             }
