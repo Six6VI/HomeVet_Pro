@@ -22,8 +22,12 @@ import com.example.homevetpro.Entities.Customer;
 import com.example.homevetpro.Entities.User;
 import com.example.homevetpro.R;
 
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 public class CustomerDetails extends AppCompatActivity {
 
@@ -60,7 +64,10 @@ public class CustomerDetails extends AppCompatActivity {
         editAddress = findViewById(R.id.editTextCustAdd);
         editZip = findViewById(R.id.editTextCustZip);
         editPhone = findViewById(R.id.editTextCustPhone);
+        String myFormat = "MM-dd-yy";
+        SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
         editEnterDate = findViewById(R.id.editTextCustAdded);
+        editEnterDate.setEnabled(false);
         editModifyDate = findViewById(R.id.editTextCustModify);
 
         customerID = getIntent().getIntExtra("customerID", -1);
@@ -72,14 +79,24 @@ public class CustomerDetails extends AppCompatActivity {
         customerModifyDate = getIntent().getStringExtra("customerModifyDate");
 
         String custID = String.valueOf(customerID);
+        String modDate = sdf.format(new Date());
 
         editID.setText(custID);
         editName.setText(customerName);
         editAddress.setText(customerAddress);
         editZip.setText(customerZip);
         editPhone.setText(customerPhone);
-        editEnterDate.setText(customerEnterDate);
         editModifyDate.setText(customerModifyDate);
+
+        /**
+         * This will set the timestamp when we create a new Customer
+         */
+
+        if(customerID==-1){
+            editEnterDate.setText(sdf.format(new Date()));
+        }else {
+            editEnterDate.setText(customerEnterDate);
+        }
 
         repository = new Repository(getApplication());
 
@@ -100,10 +117,10 @@ public class CustomerDetails extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (customerID == -1) {
-                    customer = new Customer(0, editName.getText().toString(), editAddress.getText().toString(), editZip.getText().toString(), editPhone.getText().toString(), editEnterDate.getText().toString(), editModifyDate.getText().toString());
+                    customer = new Customer(0, editName.getText().toString(), editAddress.getText().toString(), editZip.getText().toString(), editPhone.getText().toString(), editEnterDate.getText().toString(), modDate);
                     repository.insert(customer);
                 } else {
-                    customer = new Customer(customerID, editName.getText().toString(), editAddress.getText().toString(), editZip.getText().toString(), editPhone.getText().toString(), editEnterDate.getText().toString(), editModifyDate.getText().toString());
+                    customer = new Customer(customerID, editName.getText().toString(), editAddress.getText().toString(), editZip.getText().toString(), editPhone.getText().toString(), editEnterDate.getText().toString(), modDate);
                     repository.update(customer);
                 }
                 Intent intent = new Intent(CustomerDetails.this, CustomerList.class);
