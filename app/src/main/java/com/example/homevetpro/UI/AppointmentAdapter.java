@@ -12,9 +12,9 @@ import android.widget.RadioButton;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.homevetpro.DAO.CustomerDAO;
 import com.example.homevetpro.Database.Repository;
 import com.example.homevetpro.Entities.Animal;
 import com.example.homevetpro.Entities.Appointment;
@@ -32,6 +32,7 @@ public class AppointmentAdapter extends RecyclerView.Adapter<AppointmentAdapter.
     private final List<Appointment> appointmentListFull;
     Repository repository;
     String customerName;
+    int appCustID=0;
 
     private final Context context;
     private final LayoutInflater mInflater;
@@ -45,12 +46,14 @@ public class AppointmentAdapter extends RecyclerView.Adapter<AppointmentAdapter.
 
     class AppointmentViewHolder extends RecyclerView.ViewHolder{
 
+        private  TextView appCustomerTextView;
         private  TextView appDateTextView;
 
 
         private AppointmentViewHolder(View itemview){
             super(itemview);
 
+            appCustomerTextView=itemview.findViewById(R.id.appCustTextView);
             appDateTextView=itemview.findViewById(R.id.appDateTextView);
             itemview.setOnClickListener(new View.OnClickListener() {
 
@@ -86,10 +89,16 @@ public class AppointmentAdapter extends RecyclerView.Adapter<AppointmentAdapter.
 
     @Override
     public void onBindViewHolder(@NonNull AppointmentViewHolder holder, int position) {
+        Appointment currentApp = appointmentList.get(position);
+        int appCustID = currentApp.getAppCustID();
+        String customerName = AppointmentDetails.getcustName(appCustID);
+
+
+
 
         if (appointmentList != null) {
-            Appointment currentApp = appointmentList.get(position);
-            holder.appDateTextView.setText(currentApp.getAppointmentDate());
+            holder.appDateTextView.setText(customerName);
+            holder.appCustomerTextView.setText(currentApp.getAppointmentDate());
         }
         else {
             holder.appDateTextView.setText("No Appointments to Show");

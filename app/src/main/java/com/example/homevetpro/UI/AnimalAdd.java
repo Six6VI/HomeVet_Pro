@@ -4,12 +4,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -21,8 +23,13 @@ import com.example.homevetpro.R;
 
 import org.w3c.dom.Text;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 public class AnimalAdd extends AppCompatActivity {
 
@@ -38,6 +45,9 @@ public class AnimalAdd extends AppCompatActivity {
     EditText editModifyDate;
     EditText editCustAnimalID;
     EditText getEditCustAnimalName;
+
+    DatePickerDialog.OnDateSetListener birthDate;
+    final Calendar mCalendarBirth = Calendar.getInstance();
 
     int animalID;
     String animalName;
@@ -72,8 +82,12 @@ public class AnimalAdd extends AppCompatActivity {
         editColor = findViewById(R.id.editTextAnimalColor);
         editWeight = findViewById(R.id.editTextAnimalWeight);
         editNotes = findViewById(R.id.editTextAnimalNotes);
+        String myFormat = "MM-dd-yy";
+        SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
         editEnterDate = findViewById(R.id.editTextAnimalEnter);
+        editEnterDate.setEnabled(false);
         editModifyDate = findViewById(R.id.editTextAnimalModify);
+        editModifyDate.setEnabled(false);
         editCustAnimalID = findViewById(R.id.editTextAnimalCustID);
         editCustAnimalID.setEnabled(false);
 
@@ -103,7 +117,7 @@ public class AnimalAdd extends AppCompatActivity {
         editWeight.setText(aniWeight);
         editNotes.setText(animalNotes);
         editEnterDate.setText(animalEnterDate);
-        editModifyDate.setText(animalModifyDate);
+        editModifyDate.setText(sdf.format(new Date()));
         editCustAnimalID.setText(aniCustID);
 
         repository = new Repository(getApplication());
@@ -158,7 +172,39 @@ public class AnimalAdd extends AppCompatActivity {
             }
         });
 
+        editBirthday.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Date date;
+                String info = editBirthday.getText().toString();
+                try {
+                    mCalendarBirth.setTime(sdf.parse(info));
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+                new DatePickerDialog(AnimalAdd.this, birthDate, mCalendarBirth
+                        .get(Calendar.YEAR), mCalendarBirth.get(Calendar.MONTH), mCalendarBirth.get(Calendar.DAY_OF_MONTH)).show();
+            }
+        });
+
+        birthDate = new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                mCalendarBirth.set(Calendar.YEAR, year);
+                mCalendarBirth.set(Calendar.MONTH, month);
+                mCalendarBirth.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+
+                updateLabelBirth();
+            }
+        };
     }
+    private void updateLabelBirth() {
+        String myFormat = "MM-dd-yy";
+        SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
+
+        editBirthday.setText(sdf.format(mCalendarBirth.getTime()));
+    }
+
 
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.home_screen, menu);

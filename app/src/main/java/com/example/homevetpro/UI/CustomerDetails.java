@@ -59,7 +59,7 @@ public class CustomerDetails extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_customer_details);
         editID = findViewById(R.id.editTextCustomerID);
-        editID.setEnabled(false);
+        editID.setEnabled(false );
         editName = findViewById(R.id.editTextCustomerName);
         editAddress = findViewById(R.id.editTextCustAdd);
         editZip = findViewById(R.id.editTextCustZip);
@@ -69,6 +69,7 @@ public class CustomerDetails extends AppCompatActivity {
         editEnterDate = findViewById(R.id.editTextCustAdded);
         editEnterDate.setEnabled(false);
         editModifyDate = findViewById(R.id.editTextCustModify);
+        editModifyDate.setEnabled(false);
 
         customerID = getIntent().getIntExtra("customerID", -1);
         customerName = getIntent().getStringExtra("customerName");
@@ -79,14 +80,14 @@ public class CustomerDetails extends AppCompatActivity {
         customerModifyDate = getIntent().getStringExtra("customerModifyDate");
 
         String custID = String.valueOf(customerID);
-        String modDate = sdf.format(new Date());
 
         editID.setText(custID);
         editName.setText(customerName);
         editAddress.setText(customerAddress);
         editZip.setText(customerZip);
         editPhone.setText(customerPhone);
-        editModifyDate.setText(customerModifyDate);
+        String modDate = sdf.format(new Date());
+
 
         /**
          * This will set the timestamp when we create a new Customer
@@ -97,10 +98,18 @@ public class CustomerDetails extends AppCompatActivity {
         }else {
             editEnterDate.setText(customerEnterDate);
         }
+        if(customerID == -1){
+            editModifyDate.setText(sdf.format(new Date()));
+        }else{
+            editModifyDate.setText(modDate);
+
+        }
 
         repository = new Repository(getApplication());
 
+
         RecyclerView recyclerView = findViewById(R.id.recyclerViewAnimals);
+
         repository = new Repository(getApplication());
         animalList = repository.getmAllAnimals();
         final AnimalAdapter animalAdapter = new AnimalAdapter(this, animalList);
@@ -110,10 +119,11 @@ public class CustomerDetails extends AppCompatActivity {
         for (Animal p : repository.getmAllAnimals()) {
             if (p.getAnimalCustID() == customerID) filteredAnimals.add(p);
         }
-        animalAdapter.setAnimals(filteredAnimals);
+        animalAdapter.setAnimals( filteredAnimals);
 
         Button button = findViewById(R.id.buttonCustomerSave);
         button.setOnClickListener(new View.OnClickListener() {
+
             @Override
             public void onClick(View v) {
                 if (customerID == -1) {

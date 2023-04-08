@@ -29,9 +29,10 @@ public class Repository {
     private List<Appointment> mAllAppointments;
     private List<Report> mAllReports;
     private int mCustID;
+    private int mAnimalID;
     private String mCustName;
 
-    private static int NUMBER_OF_THREADS=4;
+    private static int NUMBER_OF_THREADS=8;
     static final ExecutorService databaseExecutor= Executors.newFixedThreadPool(NUMBER_OF_THREADS);
 
     public Repository(Application application){
@@ -138,8 +139,16 @@ public class Repository {
 
     }
     public String getmNameByID(int id){
-        return mCustomerDAO.getNameByID(id);
 
+        databaseExecutor.execute(()->{
+            mCustName=mCustomerDAO.getNameByID(id);
+        });
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        return mCustName;
     }
 
     public List<Animal> getmAllAnimals(){
@@ -182,6 +191,19 @@ public class Repository {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+    }
+
+    public int getmIDByAnimal(String name){
+        databaseExecutor.execute(()-> {
+            mAnimalID=mAnimalDAO.getIDByAnimal(name);
+        });
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        return mAnimalID;
+
     }
 
     public List<Appointment> getmAllAppointments(){

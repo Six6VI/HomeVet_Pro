@@ -1,11 +1,15 @@
 package com.example.homevetpro.Entities;
 
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
+
+import com.example.homevetpro.Database.Repository;
 
 import java.sql.Date;
 import java.sql.Timestamp;
 import java.time.LocalDate;
+
 
 @Entity(tableName = "appointments")
 public class Appointment {
@@ -20,6 +24,7 @@ public class Appointment {
     private String appModifyDate;
     private int appAnimalID;
     private int appCustID;
+
 
     public Appointment(int appointmentID, String appointmentDate, String appointmentNotes, int appointmentDuration, Double appointmentCost, String appEnterDate, String appModifyDate, int appAnimalID, int appCustID) {
         this.appointmentID = appointmentID;
@@ -107,5 +112,6 @@ public class Appointment {
     public void setAppCustID(int appCustID) {
         this.appCustID = appCustID;
     }
+
 
 }

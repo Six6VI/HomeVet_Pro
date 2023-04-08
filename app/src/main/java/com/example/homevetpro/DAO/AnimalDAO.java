@@ -21,4 +21,6 @@ public interface AnimalDAO {
     void delete(Animal animal);
     @Query("SELECT * FROM animals")
     List<Animal> getAllAnimals();
+    @Query("SELECT animalID from animals where animalName=:name")
+    int getIDByAnimal(String name);
 }

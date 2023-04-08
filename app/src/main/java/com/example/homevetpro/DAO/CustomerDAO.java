@@ -1,10 +1,13 @@
 package com.example.homevetpro.DAO;
 
+import android.content.Context;
+
 import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
+import androidx.room.Room;
 import androidx.room.Update;
 
 import com.example.homevetpro.Entities.Customer;
@@ -27,4 +30,5 @@ public interface CustomerDAO {
     int getIDByName(String name);
     @Query("SELECT customerName from customers where customerID=:id")
     String getNameByID(int id);
+
 }

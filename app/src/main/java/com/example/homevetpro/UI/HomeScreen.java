@@ -29,6 +29,7 @@ public class HomeScreen extends AppCompatActivity {
     RecyclerView recyclerView;
 
     List<Appointment> appointmentList;
+    List<Customer> customerList;
     AppointmentAdapter appointmentAdapter;
     int appID;
     SearchView searchView;
@@ -40,6 +41,7 @@ public class HomeScreen extends AppCompatActivity {
         repository = new Repository(getApplication());
 
         appointmentList = repository.getmAllAppointments();
+        customerList = repository.getmAllCustomers();
         appointmentAdapter = new AppointmentAdapter(this,appointmentList);
         appID=getIntent().getIntExtra("appID",-1);
 
@@ -103,7 +105,7 @@ public class HomeScreen extends AppCompatActivity {
         MenuItem searchItem = menu.findItem(R.id.actionSearch);
         SearchView searchView = (SearchView) searchItem.getActionView();
         searchView.setImeOptions(EditorInfo.IME_ACTION_DONE);
-        searchView.setQueryHint("Type here to search");
+        searchView.setQueryHint("Type here to search by Date");
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {

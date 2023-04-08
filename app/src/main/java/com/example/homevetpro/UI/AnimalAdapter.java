@@ -36,10 +36,12 @@ public class AnimalAdapter extends RecyclerView.Adapter<AnimalAdapter.AnimalView
     class AnimalViewHolder extends RecyclerView.ViewHolder {
 
         private final TextView animalTextView;
+        private final TextView animalTextView2;
 
         private AnimalViewHolder(View itemview) {
             super(itemview);
-            animalTextView = itemview.findViewById(R.id.animalTextView);
+            animalTextView2 = itemview.findViewById(R.id.animalCustomerTextView);
+            animalTextView = itemview.findViewById(R.id.animalNameTextView);
             itemview.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -74,9 +76,13 @@ public class AnimalAdapter extends RecyclerView.Adapter<AnimalAdapter.AnimalView
 
     @Override
     public void onBindViewHolder(@NonNull AnimalAdapter.AnimalViewHolder holder, int position) {
+        Animal current = animalList.get(position);
+        int animalCustID = current.getAnimalCustID();
+        String customerName = AppointmentDetails.getcustName(animalCustID);
+
         if (animalList != null) {
-            Animal current = animalList.get(position);
-            holder.animalTextView.setText(current.getAnimalName());
+            holder.animalTextView2.setText(current.getAnimalName());
+            holder.animalTextView.setText(customerName);
         } else {
             holder.animalTextView.setText("No Animals to Show");
         }

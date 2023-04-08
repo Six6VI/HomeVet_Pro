@@ -37,9 +37,11 @@ public class CustomerAdapter extends RecyclerView.Adapter<CustomerAdapter.Custom
     class CustomerViewHolder extends RecyclerView.ViewHolder{
 
         private final TextView customerTextView;
+        private final TextView customerTextView2;
         private CustomerViewHolder(View itemview){
             super(itemview);
             customerTextView=itemview.findViewById(R.id.customerTextView);
+            customerTextView2=itemview.findViewById(R.id.customerTextView2);
             itemview.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -72,6 +74,7 @@ public class CustomerAdapter extends RecyclerView.Adapter<CustomerAdapter.Custom
         if (customerList!=null){
             Customer current = customerList.get(position);
             holder.customerTextView.setText(current.getCustomerName());
+            holder.customerTextView2.setText(current.getCustomerZip());
 
 
         }

@@ -4,12 +4,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 
 import com.example.homevetpro.Database.Repository;
@@ -20,8 +22,13 @@ import com.example.homevetpro.R;
 
 import org.w3c.dom.Text;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 public class AnimalDetails extends AppCompatActivity {
 
@@ -37,6 +44,8 @@ public class AnimalDetails extends AppCompatActivity {
     EditText editModifyDate;
     EditText editCustAnimalID;
     EditText getEditCustAnimalName;
+    DatePickerDialog.OnDateSetListener birthDate;
+    final Calendar mCalendarBirth = Calendar.getInstance();
 
     int animalID;
     String animalName;
@@ -70,7 +79,9 @@ public class AnimalDetails extends AppCompatActivity {
         editWeight = findViewById(R.id.editTextAnimalWeight);
         editNotes = findViewById(R.id.editTextAnimalNotes);
         editEnterDate = findViewById(R.id.editTextAnimalEnter);
+        editEnterDate.setEnabled(false);
         editModifyDate = findViewById(R.id.editTextAnimalModify);
+        editModifyDate.setEnabled(false);
         editCustAnimalID = findViewById(R.id.editTextAnimalCustID);
         editCustAnimalID.setEnabled(false);
 
@@ -87,6 +98,8 @@ public class AnimalDetails extends AppCompatActivity {
         animalModifyDate = getIntent().getStringExtra("animalModifyDate");
         animalCustID = getIntent().getIntExtra("animalCustID", -1);
 
+        String myFormat = "MM-dd-yy";
+        SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
         String aniID = String.valueOf(animalID);
         String aniCustID = String.valueOf(animalCustID);
         String aniWeight = String.valueOf(animalWeight);
@@ -102,6 +115,22 @@ public class AnimalDetails extends AppCompatActivity {
         editEnterDate.setText(animalEnterDate);
         editModifyDate.setText(animalModifyDate);
         editCustAnimalID.setText(aniCustID);
+
+        /**
+         * This will set the timestamp when we create a new Customer
+         */
+
+        if (animalID == -1) {
+            editEnterDate.setText(sdf.format(new Date()));
+        } else {
+            editEnterDate.setText(animalEnterDate);
+        }
+        if (animalID == -1) {
+            editModifyDate.setText(sdf.format(new Date()));
+        } else {
+            editModifyDate.setText(animalModifyDate);
+
+        }
 
         repository = new Repository(getApplication());
         appointmentList = repository.getmAllAppointments();
@@ -143,6 +172,37 @@ public class AnimalDetails extends AppCompatActivity {
             }
         });
 
+        editBirthday.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Date date;
+                String info = editBirthday.getText().toString();
+                try {
+                    mCalendarBirth.setTime(sdf.parse(info));
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+                new DatePickerDialog(AnimalDetails.this, birthDate, mCalendarBirth
+                        .get(Calendar.YEAR), mCalendarBirth.get(Calendar.MONTH), mCalendarBirth.get(Calendar.DAY_OF_MONTH)).show();
+            }
+        });
+
+        birthDate = new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                mCalendarBirth.set(Calendar.YEAR, year);
+                mCalendarBirth.set(Calendar.MONTH, month);
+                mCalendarBirth.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+
+                updateLabelBirth();
+            }
+        };
+    }
+    private void updateLabelBirth() {
+        String myFormat = "MM-dd-yy";
+        SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
+
+        editBirthday.setText(sdf.format(mCalendarBirth.getTime()));
     }
 
     public boolean onCreateOptionsMenu(Menu menu) {

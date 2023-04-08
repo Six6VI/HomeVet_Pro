@@ -18,8 +18,11 @@ import com.example.homevetpro.Entities.Animal;
 import com.example.homevetpro.Entities.Customer;
 import com.example.homevetpro.R;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 public class CustomerAdd extends AppCompatActivity {
 
@@ -57,8 +60,12 @@ public class CustomerAdd extends AppCompatActivity {
         editAddress=findViewById(R.id.editTextCustAdd);
         editZip=findViewById(R.id.editTextCustZip);
         editPhone=findViewById(R.id.editTextCustPhone);
+        String myFormat = "MM-dd-yy";
+        SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
         editEnterDate=findViewById(R.id.editTextCustAdded);
+        editEnterDate.setEnabled(false);
         editModifyDate=findViewById(R.id.editTextCustModify);
+        editModifyDate.setEnabled(false);
 
         customerID = getIntent().getIntExtra("customerID",-1);
         customerName = getIntent().getStringExtra("customerName");
@@ -76,7 +83,7 @@ public class CustomerAdd extends AppCompatActivity {
         editZip.setText(customerZip);
         editPhone.setText(customerPhone);
         editEnterDate.setText(customerEnterDate);
-        editModifyDate.setText(customerModifyDate);
+        editModifyDate.setText(sdf.format(new Date()));
 
         repository = new Repository(getApplication());
 

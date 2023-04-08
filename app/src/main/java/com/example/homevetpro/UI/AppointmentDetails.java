@@ -2,12 +2,15 @@ package com.example.homevetpro.UI;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Application;
+import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -17,7 +20,13 @@ import com.example.homevetpro.Entities.Appointment;
 import com.example.homevetpro.Entities.Customer;
 import com.example.homevetpro.R;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
+import java.util.Locale;
 
 public class AppointmentDetails extends AppCompatActivity {
 
@@ -31,6 +40,9 @@ public class AppointmentDetails extends AppCompatActivity {
     EditText editAppAnimalID;
     EditText editAppCustID;
 
+    DatePickerDialog.OnDateSetListener appointmentDate;
+    final Calendar mCalendarApp = Calendar.getInstance();
+
     int appID;
     String appDate;
     String appNotes;
@@ -43,9 +55,9 @@ public class AppointmentDetails extends AppCompatActivity {
 
     Appointment appointment;
     Appointment current;
-    String customerName;
+    static String customerName;
     String custName;
-    Repository repository;
+    static Repository repository;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,7 +71,9 @@ public class AppointmentDetails extends AppCompatActivity {
         editDuration=findViewById(R.id.editTextAppDuration);
         editCost=findViewById(R.id.editTextAppCost);
         editEnterDate=findViewById(R.id.editTextAppAdded);
+        editEnterDate.setEnabled(false);
         editModifyDate=findViewById(R.id.editTextAppModify);
+        editModifyDate.setEnabled(false);
         editAppAnimalID=findViewById(R.id.editTextAppAnimalID);
         editAppAnimalID.setEnabled(false);
         editAppCustID=findViewById(R.id.editTextAppCustID);
@@ -75,22 +89,39 @@ public class AppointmentDetails extends AppCompatActivity {
         appAnimalID = getIntent().getIntExtra("appAnimalID",-1);
         appCustID = getIntent().getIntExtra("appCustID", -1);
 
-
+        String myFormat = "MM-dd-yy";
+        SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
         String sAppID = String.valueOf(appID);
         String sAppDuration = String.valueOf(appDuration);
         String sAppCost = String.valueOf(appCost);
         String sAppAnimalID = String.valueOf(appAnimalID);
         String sAppCustID = String.valueOf(appCustID);
+        String modDate = sdf.format(new Date());
 
         editID.setText(sAppID);
         editDate.setText(appDate);
         editNotes.setText(appNotes);
         editDuration.setText(sAppDuration);
         editCost.setText(sAppCost);
-        editEnterDate.setText(appEnterDate);;
         editModifyDate.setText(appModifyDate);
         editAppAnimalID.setText(sAppAnimalID);
         editAppCustID.setText(sAppCustID);
+
+        /**
+         * This will set the timestamp when we create a new Customer
+         */
+
+        if(appID==-1){
+            editEnterDate.setText(sdf.format(new Date()));
+        }else {
+            editEnterDate.setText(appEnterDate);
+        }
+        if(appCustID == -1){
+            editModifyDate.setText(sdf.format(new Date()));
+        }else{
+            editModifyDate.setText(modDate);
+
+        }
 
         repository = new Repository(getApplication());
 
@@ -119,13 +150,53 @@ public class AppointmentDetails extends AppCompatActivity {
             }
         });
 
+        editDate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Date date;
+                String info = editDate.getText().toString();
+                try {
+                    mCalendarApp.setTime(sdf.parse(info));
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+                new DatePickerDialog(AppointmentDetails.this, appointmentDate, mCalendarApp
+                        .get(Calendar.YEAR), mCalendarApp.get(Calendar.MONTH), mCalendarApp.get(Calendar.DAY_OF_MONTH)).show();
+            }
+        });
 
+        appointmentDate = new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                mCalendarApp.set(Calendar.YEAR, year);
+                mCalendarApp.set(Calendar.MONTH, month);
+                mCalendarApp.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+
+                updateLabelAppDate();
+            }
+        };
+    }
+    private void updateLabelAppDate() {
+        String myFormat = "MM-dd-yy";
+        SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
+
+        editDate.setText(sdf.format(mCalendarApp.getTime()));
     }
 
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.home_screen, menu);
 
         return true;
+    }
+
+    public static String getcustName(int id){
+        Repository repository = new Repository(new Application());
+        for (Customer customer : repository.getmAllCustomers()){
+            if (customer.getCustomerID() == id)
+                customerName = customer.getCustomerName();
+        }
+        return customerName;
+
     }
 
     public boolean onOptionsItemSelected(MenuItem item) {
