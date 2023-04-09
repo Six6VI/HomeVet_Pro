@@ -31,21 +31,24 @@ public class Repository {
     private int mCustID;
     private int mAnimalID;
     private String mCustName;
+    private String mAppNotes;
+    private Double mAppCost;
 
-    private static int NUMBER_OF_THREADS=8;
-    static final ExecutorService databaseExecutor= Executors.newFixedThreadPool(NUMBER_OF_THREADS);
+    //private static int NUMBER_OF_THREADS=8;
+    static final ExecutorService databaseExecutor = Executors.newCachedThreadPool();
 
-    public Repository(Application application){
-        HomeVetDatabaseBuilder db=HomeVetDatabaseBuilder.getDatabase(application);
-        mUserDAO=db.userDAO();
-        mCustomerDAO=db.customerDAO();
-        mAnimalDAO=db.animalDAO();
-        mAppointmentDAO=db.appointmentDAO();
-        mReportDAO=db.reportDAO();
+    public Repository(Application application) {
+        HomeVetDatabaseBuilder db = HomeVetDatabaseBuilder.getDatabase(application);
+        mUserDAO = db.userDAO();
+        mCustomerDAO = db.customerDAO();
+        mAnimalDAO = db.animalDAO();
+        mAppointmentDAO = db.appointmentDAO();
+        mReportDAO = db.reportDAO();
     }
-    public List<User> getmAllUsers(){
-        databaseExecutor.execute(()-> {
-            mAllUsers=mUserDAO.getAllUsers();
+
+    public List<User> getmAllUsers() {
+        databaseExecutor.execute(() -> {
+            mAllUsers = mUserDAO.getAllUsers();
         });
         try {
             Thread.sleep(1000);
@@ -54,8 +57,9 @@ public class Repository {
         }
         return mAllUsers;
     }
-    public void insert(User user){
-        databaseExecutor.execute(()->{
+
+    public void insert(User user) {
+        databaseExecutor.execute(() -> {
             mUserDAO.insert(user);
         });
         try {
@@ -64,18 +68,18 @@ public class Repository {
             e.printStackTrace();
         }
     }
-    public void update(User user){
-        databaseExecutor.execute(()->{
-            mUserDAO.update(user);
-        });
+
+    public void update(User user) {
+        databaseExecutor.execute(() -> mUserDAO.update(user));
         try {
             Thread.sleep(1000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
     }
-    public void delete(User user){
-        databaseExecutor.execute(()->{
+
+    public void delete(User user) {
+        databaseExecutor.execute(() -> {
             mUserDAO.delete(user);
         });
         try {
@@ -85,9 +89,9 @@ public class Repository {
         }
     }
 
-    public List<Customer> getmAllCustomers(){
-        databaseExecutor.execute(()-> {
-            mAllCustomers=mCustomerDAO.getAllCustomers();
+    public List<Customer> getmAllCustomers() {
+        databaseExecutor.execute(() -> {
+            mAllCustomers = mCustomerDAO.getAllCustomers();
         });
         try {
             Thread.sleep(1000);
@@ -96,8 +100,9 @@ public class Repository {
         }
         return mAllCustomers;
     }
-    public void insert(Customer customer){
-        databaseExecutor.execute(()->{
+
+    public void insert(Customer customer) {
+        databaseExecutor.execute(() -> {
             mCustomerDAO.insert(customer);
         });
         try {
@@ -106,18 +111,18 @@ public class Repository {
             e.printStackTrace();
         }
     }
-    public void update(Customer customer){
-        databaseExecutor.execute(()->{
-            mCustomerDAO.update(customer);
-        });
+
+    public void update(Customer customer) {
+        databaseExecutor.execute(() -> mCustomerDAO.update(customer));
         try {
             Thread.sleep(1000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
     }
-    public void delete(Customer customer){
-        databaseExecutor.execute(()->{
+
+    public void delete(Customer customer) {
+        databaseExecutor.execute(() -> {
             mCustomerDAO.delete(customer);
         });
         try {
@@ -126,9 +131,10 @@ public class Repository {
             e.printStackTrace();
         }
     }
-    public int getmIDByName(String name){
-        databaseExecutor.execute(()-> {
-            mCustID=mCustomerDAO.getIDByName(name);
+
+    public int getmIDByName(String name) {
+        databaseExecutor.execute(() -> {
+            mCustID = mCustomerDAO.getIDByName(name);
         });
         try {
             Thread.sleep(1000);
@@ -138,10 +144,11 @@ public class Repository {
         return mCustID;
 
     }
-    public String getmNameByID(int id){
 
-        databaseExecutor.execute(()->{
-            mCustName=mCustomerDAO.getNameByID(id);
+    public String getmNameByID(int id) {
+
+        databaseExecutor.execute(() -> {
+            mCustName = mCustomerDAO.getNameByID(id);
         });
         try {
             Thread.sleep(1000);
@@ -151,9 +158,9 @@ public class Repository {
         return mCustName;
     }
 
-    public List<Animal> getmAllAnimals(){
-        databaseExecutor.execute(()-> {
-            mAllAnimals=mAnimalDAO.getAllAnimals();
+    public List<Animal> getmAllAnimals() {
+        databaseExecutor.execute(() -> {
+            mAllAnimals = mAnimalDAO.getAllAnimals();
         });
         try {
             Thread.sleep(1000);
@@ -162,8 +169,9 @@ public class Repository {
         }
         return mAllAnimals;
     }
-    public void insert(Animal animal){
-        databaseExecutor.execute(()->{
+
+    public void insert(Animal animal) {
+        databaseExecutor.execute(() -> {
             mAnimalDAO.insert(animal);
         });
         try {
@@ -172,8 +180,9 @@ public class Repository {
             e.printStackTrace();
         }
     }
-    public void update(Animal animal){
-        databaseExecutor.execute(()->{
+
+    public void update(Animal animal) {
+        databaseExecutor.execute(() -> {
             mAnimalDAO.update(animal);
         });
         try {
@@ -182,8 +191,9 @@ public class Repository {
             e.printStackTrace();
         }
     }
-    public void delete(Animal animal){
-        databaseExecutor.execute(()->{
+
+    public void delete(Animal animal) {
+        databaseExecutor.execute(() -> {
             mAnimalDAO.delete(animal);
         });
         try {
@@ -193,9 +203,9 @@ public class Repository {
         }
     }
 
-    public int getmIDByAnimal(String name){
-        databaseExecutor.execute(()-> {
-            mAnimalID=mAnimalDAO.getIDByAnimal(name);
+    public int getmIDByAnimal(String name) {
+        databaseExecutor.execute(() -> {
+            mAnimalID = mAnimalDAO.getIDByAnimal(name);
         });
         try {
             Thread.sleep(1000);
@@ -206,9 +216,9 @@ public class Repository {
 
     }
 
-    public List<Appointment> getmAllAppointments(){
-        databaseExecutor.execute(()->{
-            mAllAppointments=mAppointmentDAO.getAllAppointments();
+    public List<Appointment> getmAllAppointments() {
+        databaseExecutor.execute(() -> {
+            mAllAppointments = mAppointmentDAO.getAllAppointments();
         });
         try {
             Thread.sleep(1000);
@@ -219,8 +229,8 @@ public class Repository {
 
     }
 
-    public void insert(Appointment appointment){
-        databaseExecutor.execute(()->{
+    public void insert(Appointment appointment) {
+        databaseExecutor.execute(() -> {
             mAppointmentDAO.insert(appointment);
         });
         try {
@@ -229,8 +239,9 @@ public class Repository {
             e.printStackTrace();
         }
     }
-    public void update(Appointment appointment){
-        databaseExecutor.execute(()->{
+
+    public void update(Appointment appointment) {
+        databaseExecutor.execute(() -> {
             mAppointmentDAO.update(appointment);
         });
         try {
@@ -239,8 +250,9 @@ public class Repository {
             e.printStackTrace();
         }
     }
-    public void delete(Appointment appointment){
-        databaseExecutor.execute(()->{
+
+    public void delete(Appointment appointment) {
+        databaseExecutor.execute(() -> {
             mAppointmentDAO.delete(appointment);
         });
         try {
@@ -250,9 +262,35 @@ public class Repository {
         }
     }
 
-    public List<Report> getmAllReports(){
-        databaseExecutor.execute(()->{
-            mAllReports=mReportDAO.getAllReports();
+    public String getNotesById(int id) {
+        databaseExecutor.execute(() -> {
+            mAppNotes = mAppointmentDAO.getNotesById(id);
+        });
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        return mAppNotes;
+
+    }
+
+    public Double getCostById(int id) {
+        databaseExecutor.execute(() -> {
+            mAppCost = mAppointmentDAO.getCostById(id);
+        });
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        return mAppCost;
+
+    }
+
+    public List<Report> getmAllReports() {
+        databaseExecutor.execute(() -> {
+            mAllReports = mReportDAO.getAllReports();
         });
         try {
             Thread.sleep(1000);
@@ -261,8 +299,9 @@ public class Repository {
         }
         return mAllReports;
     }
-    public void insert(Report report){
-        databaseExecutor.execute(()->{
+
+    public void insert(Report report) {
+        databaseExecutor.execute(() -> {
             mReportDAO.insert(report);
         });
         try {
@@ -271,8 +310,9 @@ public class Repository {
             e.printStackTrace();
         }
     }
-    public void update(Report report){
-        databaseExecutor.execute(()->{
+
+    public void update(Report report) {
+        databaseExecutor.execute(() -> {
             mReportDAO.update(report);
         });
         try {
@@ -281,8 +321,9 @@ public class Repository {
             e.printStackTrace();
         }
     }
-    public void delete(Report report){
-        databaseExecutor.execute(()->{
+
+    public void delete(Report report) {
+        databaseExecutor.execute(() -> {
             mReportDAO.delete(report);
         });
         try {

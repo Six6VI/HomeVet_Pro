@@ -2,6 +2,7 @@ package com.example.homevetpro.UI;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -73,8 +74,42 @@ public class AnimalAdapter extends RecyclerView.Adapter<AnimalAdapter.AnimalView
         View itemView = mInflater.inflate(R.layout.animal_list_item, parent, false);
         return new AnimalViewHolder(itemView);
     }
-
     @Override
+    public void onBindViewHolder(@NonNull AnimalAdapter.AnimalViewHolder holder, int position) {
+        Animal current = animalList.get(position);
+        int animalCustID = current.getAnimalCustID();
+
+        new GetCustomerNameTask(holder, animalCustID).execute();
+
+        if (animalList != null) {
+            holder.animalTextView2.setText(current.getAnimalName());
+        } else {
+            holder.animalTextView2.setText("No Animals to Show");
+        }
+    }
+
+    private class GetCustomerNameTask extends AsyncTask<Void, Void, String> {
+        private AnimalAdapter.AnimalViewHolder holder;
+        private int animalCustID;
+
+        public GetCustomerNameTask(AnimalAdapter.AnimalViewHolder holder, int animalCustID) {
+            this.holder = holder;
+            this.animalCustID = animalCustID;
+        }
+
+        @Override
+        protected String doInBackground(Void... voids) {
+            return AppointmentDetails.getcustName(animalCustID);
+        }
+
+        @Override
+        protected void onPostExecute(String customerName) {
+            super.onPostExecute(customerName);
+            holder.animalTextView.setText(customerName);
+        }
+    }
+
+    /*@Override
     public void onBindViewHolder(@NonNull AnimalAdapter.AnimalViewHolder holder, int position) {
         Animal current = animalList.get(position);
         int animalCustID = current.getAnimalCustID();
@@ -87,7 +122,7 @@ public class AnimalAdapter extends RecyclerView.Adapter<AnimalAdapter.AnimalView
             holder.animalTextView.setText("No Animals to Show");
         }
 
-    }
+    }*/
 
     @Override
     public int getItemCount() {

@@ -21,5 +21,9 @@ public interface AppointmentDAO {
     void delete(Appointment appointment);
     @Query("SELECT * FROM appointments")
     List<Appointment> getAllAppointments();
+    @Query("Select appointmentNotes from appointments Where appAnimalID =:id")
+    String getNotesById(int id);
+    @Query("Select appointmentCost from appointments Where appAnimalID =:id")
+    Double getCostById(int id);
 
 }

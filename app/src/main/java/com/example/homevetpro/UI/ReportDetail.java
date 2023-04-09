@@ -2,10 +2,15 @@ package com.example.homevetpro.UI;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Application;
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 
@@ -41,6 +46,7 @@ public class ReportDetail extends AppCompatActivity {
     Animal animal;
     Repository repository;
     List<Report> reportList;
+    Report report;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -94,6 +100,8 @@ public class ReportDetail extends AppCompatActivity {
                         editAnimal.setText(animalArrayAdapter.getItem(position));
                         String selectedAnimalName = animalArrayAdapter.getItem(position);
                         int selectedAnimalId = repository.getmIDByAnimal(selectedAnimalName);
+                        String selectedAppNotes = repository.getNotesById(selectedAnimalId);
+                        Double selectedAppCost = repository.getCostById(selectedAnimalId);
 
                         List<String> appDates = new ArrayList<>();
                         for(Appointment appointment: repository.getmAllAppointments()){
@@ -101,13 +109,17 @@ public class ReportDetail extends AppCompatActivity {
                                 appDates.add(appointment.getAppointmentDate());
                             }
                         }
+
                         ArrayAdapter<String> appointmentArrayAdapter = new ArrayAdapter<>(ReportDetail.this,android.R.layout.simple_spinner_item,appDates);
                         spinnerAppointment.setAdapter(appointmentArrayAdapter);
+
 
                         spinnerAppointment.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                             @Override
                             public void onItemSelected(AdapterView<?> adapterView1, View view, int i, long l) {
                                 editAppDate.setText(appointmentArrayAdapter.getItem(i));
+                                editAppNotes.setText(String.valueOf(selectedAppNotes));
+                                editAppCost.setText(String.valueOf(selectedAppCost));
                                 editAppId.setText(String.valueOf(selectedAnimalId));
 
                             }
@@ -136,5 +148,50 @@ public class ReportDetail extends AppCompatActivity {
             }
         });
 
+        Button button = findViewById(R.id.buttonReportSave);
+        button.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                if (reportID == -1) {
+                    report = new Report(0, editCustomer.getText().toString(),editAnimal.getText().toString(),editAppDate.getText().toString(),editAppNotes.getText().toString(),Double.valueOf(editAppCost.getText().toString()),Integer.parseInt(editAppId.getText().toString()));
+                    repository.insert(report);
+                } else {
+                    report = new Report(reportID, editCustomer.getText().toString(),editAnimal.getText().toString(),editAppDate.getText().toString(),editAppNotes.getText().toString(),Double.valueOf(editAppCost.getText().toString()),Integer.parseInt(editAppId.getText().toString()));
+                    repository.update(report);
+                }
+                Intent intent = new Intent(ReportDetail.this, ReportList.class);
+                startActivity(intent);
+            }
+        });
+        Button delete = findViewById(R.id.buttonReportDelete);
+        delete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent intent = new Intent(ReportDetail.this, ReportList.class);
+                startActivity(intent);
+            }
+        });
+
+
     }
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.basic_home, menu);
+
+        return true;
+    }
+
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.home_basic:
+
+                Intent intent = new Intent(ReportDetail.this, HomeScreen.class);
+                startActivity(intent);
+
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
 }

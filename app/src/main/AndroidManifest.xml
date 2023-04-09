@@ -13,9 +13,19 @@
         android:theme="@style/Theme.HomeVetPro"
         tools:targetApi="31">
         <activity
-            android:name=".UI.ReportDetail"
+            android:name=".UI.ReportInvoice"
             android:exported="false"
             android:label="Report Details"
+            android:parentActivityName=".UI.ReportList"
+            android:windowSoftInputMode="adjustPan">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
+            android:name=".UI.ReportDetail"
+            android:exported="false"
+            android:label="Create a Report"
             android:parentActivityName=".UI.ReportList"
             android:windowSoftInputMode="adjustPan">
             <meta-data
