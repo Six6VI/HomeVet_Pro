@@ -2,7 +2,6 @@ package com.example.homevetpro.UI;
 
 import android.content.Context;
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,7 +12,6 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.homevetpro.Entities.Animal;
-import com.example.homevetpro.Entities.Customer;
 import com.example.homevetpro.R;
 
 import java.util.ArrayList;
@@ -21,17 +19,114 @@ import java.util.List;
 
 public class AnimalAdapter extends RecyclerView.Adapter<AnimalAdapter.AnimalViewHolder> {
 
-    private List<Animal> animalList;
     private final List<Animal> animalListFull;
-
     private final Context context;
     private final LayoutInflater mInflater;
+    private List<Animal> animalList;
+    private final Filter animalFilter = new Filter() {
+        @Override
+        protected FilterResults performFiltering(CharSequence constraint) {
+            List<Animal> filteredAnimal = new ArrayList<>();
+            FilterResults results = new FilterResults();
+
+            if (constraint == null || constraint.length() == 0) {
+                filteredAnimal.addAll(animalListFull);
+            } else {
+                String filterPattern = constraint.toString().toLowerCase().trim();
+                for (Animal item : animalListFull) {
+                    if (item.getAnimalName().toLowerCase().contains(filterPattern)) {
+                        filteredAnimal.add(item);
+                    }
+                }
+            }
+            results.values = filteredAnimal;
+            return results;
+        }
+
+        @Override
+        protected void publishResults(CharSequence constraint, FilterResults results) {
+            animalList.clear();
+            animalList.addAll((List) results.values);
+            notifyDataSetChanged();
+
+        }
+    };
 
     public AnimalAdapter(Context context, List<Animal> animalList) {
         mInflater = LayoutInflater.from(context);
         this.context = context;
         this.animalList = animalList;
         animalListFull = new ArrayList<>(animalList);
+    }
+
+    @NonNull
+    @Override
+    public AnimalAdapter.AnimalViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View itemView = mInflater.inflate(R.layout.animal_list_item, parent, false);
+        return new AnimalViewHolder(itemView);
+    }
+    /*@Override
+    public void onBindViewHolder(@NonNull AnimalAdapter.AnimalViewHolder holder, int position) {
+        Animal current = animalList.get(position);
+        int animalCustID = current.getAnimalCustID();
+
+        new GetCustomerNameTask(holder, animalCustID).execute();
+
+        if (animalList != null) {
+            holder.animalTextView2.setText(current.getAnimalName());
+        } else {
+            holder.animalTextView2.setText("No Animals to Show");
+        }
+    }
+
+    private class GetCustomerNameTask extends AsyncTask<Void, Void, String> {
+        private AnimalAdapter.AnimalViewHolder holder;
+        private int animalCustID;
+
+        public GetCustomerNameTask(AnimalAdapter.AnimalViewHolder holder, int animalCustID) {
+            this.holder = holder;
+            this.animalCustID = animalCustID;
+        }
+
+        @Override
+        protected String doInBackground(Void... voids) {
+            return AppointmentDetails.getcustName(animalCustID);
+        }
+
+        @Override
+        protected void onPostExecute(String customerName) {
+            super.onPostExecute(customerName);
+            holder.animalTextView.setText(customerName);
+        }
+    }*/
+
+    @Override
+    public void onBindViewHolder(@NonNull AnimalAdapter.AnimalViewHolder holder, int position) {
+        Animal current = animalList.get(position);
+        int animalCustID = current.getAnimalCustID();
+        String customerName = AppointmentDetails.getcustName(animalCustID);
+
+        if (animalList != null) {
+            holder.animalTextView2.setText(current.getAnimalName());
+            holder.animalTextView.setText(customerName);
+        } else {
+            holder.animalTextView.setText("No Animals to Show");
+        }
+
+    }
+
+    @Override
+    public int getItemCount() {
+        return animalList.size();
+    }
+
+    public void setAnimals(List<Animal> animalList) {
+        this.animalList = animalList;
+        notifyDataSetChanged();
+    }
+
+    public Filter getFilter() {
+        return animalFilter;
     }
 
     class AnimalViewHolder extends RecyclerView.ViewHolder {
@@ -66,105 +161,5 @@ public class AnimalAdapter extends RecyclerView.Adapter<AnimalAdapter.AnimalView
             });
         }
     }
-
-
-    @NonNull
-    @Override
-    public AnimalAdapter.AnimalViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View itemView = mInflater.inflate(R.layout.animal_list_item, parent, false);
-        return new AnimalViewHolder(itemView);
-    }
-    @Override
-    public void onBindViewHolder(@NonNull AnimalAdapter.AnimalViewHolder holder, int position) {
-        Animal current = animalList.get(position);
-        int animalCustID = current.getAnimalCustID();
-
-        new GetCustomerNameTask(holder, animalCustID).execute();
-
-        if (animalList != null) {
-            holder.animalTextView2.setText(current.getAnimalName());
-        } else {
-            holder.animalTextView2.setText("No Animals to Show");
-        }
-    }
-
-    private class GetCustomerNameTask extends AsyncTask<Void, Void, String> {
-        private AnimalAdapter.AnimalViewHolder holder;
-        private int animalCustID;
-
-        public GetCustomerNameTask(AnimalAdapter.AnimalViewHolder holder, int animalCustID) {
-            this.holder = holder;
-            this.animalCustID = animalCustID;
-        }
-
-        @Override
-        protected String doInBackground(Void... voids) {
-            return AppointmentDetails.getcustName(animalCustID);
-        }
-
-        @Override
-        protected void onPostExecute(String customerName) {
-            super.onPostExecute(customerName);
-            holder.animalTextView.setText(customerName);
-        }
-    }
-
-    /*@Override
-    public void onBindViewHolder(@NonNull AnimalAdapter.AnimalViewHolder holder, int position) {
-        Animal current = animalList.get(position);
-        int animalCustID = current.getAnimalCustID();
-        String customerName = AppointmentDetails.getcustName(animalCustID);
-
-        if (animalList != null) {
-            holder.animalTextView2.setText(current.getAnimalName());
-            holder.animalTextView.setText(customerName);
-        } else {
-            holder.animalTextView.setText("No Animals to Show");
-        }
-
-    }*/
-
-    @Override
-    public int getItemCount() {
-        return animalList.size();
-    }
-
-    public void setAnimals(List<Animal> animalList) {
-        this.animalList = animalList;
-        notifyDataSetChanged();
-    }
-
-    public Filter getFilter() {
-        return animalFilter;
-    }
-
-    private Filter animalFilter = new Filter() {
-        @Override
-        protected FilterResults performFiltering(CharSequence constraint) {
-            List<Animal> filteredAnimal = new ArrayList<>();
-            FilterResults results = new FilterResults();
-
-            if (constraint == null || constraint.length() == 0) {
-                filteredAnimal.addAll(animalListFull);
-            } else {
-                String filterPattern = constraint.toString().toLowerCase().trim();
-                for (Animal item : animalListFull) {
-                    if (item.getAnimalName().toLowerCase().contains(filterPattern)) {
-                        filteredAnimal.add(item);
-                    }
-                }
-            }
-            results.values = filteredAnimal;
-            return results;
-        }
-
-        @Override
-        protected void publishResults(CharSequence constraint, FilterResults results) {
-            animalList.clear();
-            animalList.addAll((List) results.values);
-            notifyDataSetChanged();
-
-        }
-    };
 }
 

@@ -1,7 +1,5 @@
 package com.example.homevetpro.UI;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.app.Application;
 import android.app.DatePickerDialog;
 import android.content.Intent;
@@ -14,18 +12,17 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.example.homevetpro.Database.Repository;
-import com.example.homevetpro.Entities.Animal;
 import com.example.homevetpro.Entities.Appointment;
 import com.example.homevetpro.Entities.Customer;
 import com.example.homevetpro.R;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.List;
 import java.util.Locale;
 
 public class AppointmentDetails extends AppCompatActivity {
@@ -56,7 +53,6 @@ public class AppointmentDetails extends AppCompatActivity {
     Appointment appointment;
     Appointment current;
     static String customerName;
-    String custName;
     static Repository repository;
 
     @Override
@@ -153,7 +149,6 @@ public class AppointmentDetails extends AppCompatActivity {
         editDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Date date;
                 String info = editDate.getText().toString();
                 try {
                     mCalendarApp.setTime(sdf.parse(info));
@@ -189,9 +184,9 @@ public class AppointmentDetails extends AppCompatActivity {
         return true;
     }
 
-    public static String getcustName(int id){
+    public static String getcustName(int id) {
         Repository repository = new Repository(new Application());
-        for (Customer customer : repository.getmAllCustomers()){
+        for (Customer customer : repository.getmAllCustomers()) {
             if (customer.getCustomerID() == id)
                 customerName = customer.getCustomerName();
         }

@@ -1,9 +1,5 @@
 package com.example.homevetpro.UI;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
@@ -11,7 +7,11 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
+
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.homevetpro.Database.Repository;
 import com.example.homevetpro.Entities.Report;
@@ -26,7 +26,7 @@ public class ReportList extends AppCompatActivity {
     List<Report> mReports;
     ReportAdapter reportAdapter;
     int reportID;
-    SearchView searchView;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,7 +36,7 @@ public class ReportList extends AppCompatActivity {
 
         mReports = repository.getmAllReports();
         reportAdapter = new ReportAdapter(this, mReports);
-        reportID = getIntent().getIntExtra("reportID" , -1);
+        reportID = getIntent().getIntExtra("reportID", -1);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -59,11 +59,13 @@ public class ReportList extends AppCompatActivity {
             }
         });
     }
-    public void reportRecyclerView(){
+
+    public void reportRecyclerView() {
         recyclerView = findViewById(R.id.recyclerViewReport);
         recyclerView.setAdapter(reportAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
     }
+
     public boolean onCreateOptionsMenu(Menu menu) {
 
         getMenuInflater().inflate(R.menu.search_menu, menu);

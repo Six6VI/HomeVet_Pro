@@ -1,8 +1,5 @@
 package com.example.homevetpro.UI;
 
-import androidx.appcompat.app.AppCompatActivity;
-
-import android.app.Application;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
@@ -13,6 +10,8 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.homevetpro.Database.Repository;
 import com.example.homevetpro.Entities.Animal;
@@ -42,10 +41,7 @@ public class ReportDetail extends AppCompatActivity {
     double appCost;
     int appID;
 
-    Customer customer;
-    Animal animal;
     Repository repository;
-    List<Report> reportList;
     Report report;
 
     @Override
@@ -60,23 +56,23 @@ public class ReportDetail extends AppCompatActivity {
         editAppCost = findViewById(R.id.editTextReportAppCost);
         editAppId = findViewById(R.id.editTextReportAppID);
 
-        reportID=getIntent().getIntExtra("reportID",-1);
-        custName=getIntent().getStringExtra("customerName");
-        animalName=getIntent().getStringExtra("animalName");
-        appDate=getIntent().getStringExtra("appDate");
-        appNotes=getIntent().getStringExtra("appNotes");
-        appCost=getIntent().getDoubleExtra("appCost",0);
-        appID=getIntent().getIntExtra("appID",-1);
+        reportID = getIntent().getIntExtra("reportID", -1);
+        custName = getIntent().getStringExtra("customerName");
+        animalName = getIntent().getStringExtra("animalName");
+        appDate = getIntent().getStringExtra("appDate");
+        appNotes = getIntent().getStringExtra("appNotes");
+        appCost = getIntent().getDoubleExtra("appCost", 0);
+        appID = getIntent().getIntExtra("appID", -1);
 
-        repository= new Repository(getApplication());
+        repository = new Repository(getApplication());
         Spinner spinnerCust = findViewById(R.id.spinnerCustomer);
         Spinner spinnerAnimal = findViewById(R.id.spinnerAnimal);
         Spinner spinnerAppointment = findViewById(R.id.spinnerAppointment);
         List<String> customerNames = new ArrayList<>();
-        for(Customer customer : repository.getmAllCustomers()){
+        for (Customer customer : repository.getmAllCustomers()) {
             customerNames.add(customer.getCustomerName());
         }
-        ArrayAdapter<String> customerArrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item,customerNames);
+        ArrayAdapter<String> customerArrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, customerNames);
         spinnerCust.setAdapter(customerArrayAdapter);
         spinnerCust.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -86,12 +82,12 @@ public class ReportDetail extends AppCompatActivity {
                 int selectedCustomerId = repository.getmIDByName(selectedCustomerName);
 
                 List<String> animalNames = new ArrayList<>();
-                for(Animal animal : repository.getmAllAnimals()){
-                    if(animal.getAnimalCustID()==selectedCustomerId){
+                for (Animal animal : repository.getmAllAnimals()) {
+                    if (animal.getAnimalCustID() == selectedCustomerId) {
                         animalNames.add(animal.getAnimalName());
                     }
                 }
-                ArrayAdapter<String> animalArrayAdapter = new ArrayAdapter<>(ReportDetail.this,android.R.layout.simple_spinner_item, animalNames);
+                ArrayAdapter<String> animalArrayAdapter = new ArrayAdapter<>(ReportDetail.this, android.R.layout.simple_spinner_item, animalNames);
                 spinnerAnimal.setAdapter(animalArrayAdapter);
 
                 spinnerAnimal.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -104,13 +100,13 @@ public class ReportDetail extends AppCompatActivity {
                         Double selectedAppCost = repository.getCostById(selectedAnimalId);
 
                         List<String> appDates = new ArrayList<>();
-                        for(Appointment appointment: repository.getmAllAppointments()){
-                            if(appointment.getAppAnimalID()==selectedAnimalId){
+                        for (Appointment appointment : repository.getmAllAppointments()) {
+                            if (appointment.getAppAnimalID() == selectedAnimalId) {
                                 appDates.add(appointment.getAppointmentDate());
                             }
                         }
 
-                        ArrayAdapter<String> appointmentArrayAdapter = new ArrayAdapter<>(ReportDetail.this,android.R.layout.simple_spinner_item,appDates);
+                        ArrayAdapter<String> appointmentArrayAdapter = new ArrayAdapter<>(ReportDetail.this, android.R.layout.simple_spinner_item, appDates);
                         spinnerAppointment.setAdapter(appointmentArrayAdapter);
 
 
@@ -140,7 +136,7 @@ public class ReportDetail extends AppCompatActivity {
                     }
                 });
 
-                }
+            }
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
@@ -154,10 +150,10 @@ public class ReportDetail extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (reportID == -1) {
-                    report = new Report(0, editCustomer.getText().toString(),editAnimal.getText().toString(),editAppDate.getText().toString(),editAppNotes.getText().toString(),Double.valueOf(editAppCost.getText().toString()),Integer.parseInt(editAppId.getText().toString()));
+                    report = new Report(0, editCustomer.getText().toString(), editAnimal.getText().toString(), editAppDate.getText().toString(), editAppNotes.getText().toString(), Double.valueOf(editAppCost.getText().toString()), Integer.parseInt(editAppId.getText().toString()));
                     repository.insert(report);
                 } else {
-                    report = new Report(reportID, editCustomer.getText().toString(),editAnimal.getText().toString(),editAppDate.getText().toString(),editAppNotes.getText().toString(),Double.valueOf(editAppCost.getText().toString()),Integer.parseInt(editAppId.getText().toString()));
+                    report = new Report(reportID, editCustomer.getText().toString(), editAnimal.getText().toString(), editAppDate.getText().toString(), editAppNotes.getText().toString(), Double.valueOf(editAppCost.getText().toString()), Integer.parseInt(editAppId.getText().toString()));
                     repository.update(report);
                 }
                 Intent intent = new Intent(ReportDetail.this, ReportList.class);
@@ -176,6 +172,7 @@ public class ReportDetail extends AppCompatActivity {
 
 
     }
+
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.basic_home, menu);
 

@@ -18,11 +18,13 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 public class Repository {
-    private UserDAO mUserDAO;
-    private CustomerDAO mCustomerDAO;
-    private AnimalDAO mAnimalDAO;
-    private AppointmentDAO mAppointmentDAO;
-    private ReportDAO mReportDAO;
+    //private static int NUMBER_OF_THREADS=8;
+    static final ExecutorService databaseExecutor = Executors.newCachedThreadPool();
+    private final UserDAO mUserDAO;
+    private final CustomerDAO mCustomerDAO;
+    private final AnimalDAO mAnimalDAO;
+    private final AppointmentDAO mAppointmentDAO;
+    private final ReportDAO mReportDAO;
     private List<User> mAllUsers;
     private List<Customer> mAllCustomers;
     private List<Animal> mAllAnimals;
@@ -33,9 +35,6 @@ public class Repository {
     private String mCustName;
     private String mAppNotes;
     private Double mAppCost;
-
-    //private static int NUMBER_OF_THREADS=8;
-    static final ExecutorService databaseExecutor = Executors.newCachedThreadPool();
 
     public Repository(Application application) {
         HomeVetDatabaseBuilder db = HomeVetDatabaseBuilder.getDatabase(application);
@@ -79,9 +78,7 @@ public class Repository {
     }
 
     public void delete(User user) {
-        databaseExecutor.execute(() -> {
-            mUserDAO.delete(user);
-        });
+        databaseExecutor.execute(() -> mUserDAO.delete(user));
         try {
             Thread.sleep(1000);
         } catch (InterruptedException e) {
@@ -102,9 +99,8 @@ public class Repository {
     }
 
     public void insert(Customer customer) {
-        databaseExecutor.execute(() -> {
-            mCustomerDAO.insert(customer);
-        });
+        databaseExecutor.execute(() -> mCustomerDAO.insert(customer));
+
         try {
             Thread.sleep(1000);
         } catch (InterruptedException e) {

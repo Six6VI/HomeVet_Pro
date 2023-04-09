@@ -1,9 +1,5 @@
 package com.example.homevetpro.UI;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
@@ -12,6 +8,10 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.homevetpro.Database.Repository;
 import com.example.homevetpro.Entities.Animal;
@@ -49,25 +49,24 @@ public class CustomerAdd extends AppCompatActivity {
     List<Animal> animalList;
 
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_customer_add);
-        editID=findViewById(R.id.editTextCustomerID);
+        editID = findViewById(R.id.editTextCustomerID);
         editID.setEnabled(false);
-        editName=findViewById(R.id.editTextCustomerName);
-        editAddress=findViewById(R.id.editTextCustAdd);
-        editZip=findViewById(R.id.editTextCustZip);
-        editPhone=findViewById(R.id.editTextCustPhone);
+        editName = findViewById(R.id.editTextCustomerName);
+        editAddress = findViewById(R.id.editTextCustAdd);
+        editZip = findViewById(R.id.editTextCustZip);
+        editPhone = findViewById(R.id.editTextCustPhone);
         String myFormat = "MM-dd-yy";
         SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
-        editEnterDate=findViewById(R.id.editTextCustAdded);
+        editEnterDate = findViewById(R.id.editTextCustAdded);
         editEnterDate.setEnabled(false);
-        editModifyDate=findViewById(R.id.editTextCustModify);
+        editModifyDate = findViewById(R.id.editTextCustModify);
         editModifyDate.setEnabled(false);
 
-        customerID = getIntent().getIntExtra("customerID",-1);
+        customerID = getIntent().getIntExtra("customerID", -1);
         customerName = getIntent().getStringExtra("customerName");
         customerAddress = getIntent().getStringExtra("customerAddress");
         customerZip = getIntent().getStringExtra("customerZip");
@@ -90,7 +89,7 @@ public class CustomerAdd extends AppCompatActivity {
         RecyclerView recyclerView = findViewById(R.id.recyclerViewAnimals);
         repository = new Repository(getApplication());
         animalList = repository.getmAllAnimals();
-        final AnimalAdapter animalAdapter = new AnimalAdapter(this,animalList);
+        final AnimalAdapter animalAdapter = new AnimalAdapter(this, animalList);
         recyclerView.setAdapter(animalAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         List<Animal> filteredAnimals = new ArrayList<>();
@@ -127,12 +126,9 @@ public class CustomerAdd extends AppCompatActivity {
                     repository.update(customer);
                 }
 
-                String custName = customerName;
-
                 int id = Integer.parseInt(editID.getText().toString());
-                // List<Customer> customers = repository.getmAllCustomers();
-                //int animalCustomerID = repository.getmIDByName(custName);
-                Intent intent = new Intent(v.getContext(),AnimalDetails.class);
+
+                Intent intent = new Intent(v.getContext(), AnimalDetails.class);
                 intent.putExtra("animalCustID", id);
                 startActivity(intent);
 
@@ -140,6 +136,7 @@ public class CustomerAdd extends AppCompatActivity {
         });
 
     }
+
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.home_screen, menu);
 
@@ -161,10 +158,10 @@ public class CustomerAdd extends AppCompatActivity {
                     if (customer.getCustomerID() == customerID)
                         current = customer;
                 }
-                    repository.delete(current);
-                    Toast.makeText(CustomerAdd.this, current.getCustomerName() + " was deleted", Toast.LENGTH_LONG).show();
-                    Intent intent2 = new Intent(CustomerAdd.this, CustomerList.class);
-                    startActivity(intent2);
+                repository.delete(current);
+                Toast.makeText(CustomerAdd.this, current.getCustomerName() + " was deleted", Toast.LENGTH_LONG).show();
+                Intent intent2 = new Intent(CustomerAdd.this, CustomerList.class);
+                startActivity(intent2);
 
                 break;
         }

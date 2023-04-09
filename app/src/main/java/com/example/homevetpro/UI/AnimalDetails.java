@@ -1,9 +1,5 @@
 package com.example.homevetpro.UI;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
@@ -14,13 +10,14 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.example.homevetpro.Database.Repository;
 import com.example.homevetpro.Entities.Animal;
 import com.example.homevetpro.Entities.Appointment;
-import com.example.homevetpro.Entities.Customer;
 import com.example.homevetpro.R;
-
-import org.w3c.dom.Text;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -32,6 +29,7 @@ import java.util.Locale;
 
 public class AnimalDetails extends AppCompatActivity {
 
+    final Calendar mCalendarBirth = Calendar.getInstance();
     EditText editID;
     EditText editName;
     EditText editType;
@@ -45,8 +43,6 @@ public class AnimalDetails extends AppCompatActivity {
     EditText editCustAnimalID;
     EditText getEditCustAnimalName;
     DatePickerDialog.OnDateSetListener birthDate;
-    final Calendar mCalendarBirth = Calendar.getInstance();
-
     int animalID;
     String animalName;
     String animalType;
@@ -198,6 +194,7 @@ public class AnimalDetails extends AppCompatActivity {
             }
         };
     }
+
     private void updateLabelBirth() {
         String myFormat = "MM-dd-yy";
         SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);

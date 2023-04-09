@@ -17,18 +17,8 @@ import com.example.homevetpro.Entities.Customer;
 import com.example.homevetpro.Entities.Report;
 import com.example.homevetpro.Entities.User;
 
-@Database(entities = {User.class, Customer.class, Animal.class, Appointment.class, Report.class}, version=1, exportSchema = false)
+@Database(entities = {User.class, Customer.class, Animal.class, Appointment.class, Report.class}, version = 1, exportSchema = false)
 public abstract class HomeVetDatabaseBuilder extends RoomDatabase {
-
-    public abstract UserDAO userDAO();
-
-    public abstract CustomerDAO customerDAO();
-
-    public abstract AnimalDAO animalDAO();
-
-    public abstract AppointmentDAO appointmentDAO();
-
-    public abstract ReportDAO reportDAO();
 
     private static volatile HomeVetDatabaseBuilder INSTANCE;
 
@@ -44,5 +34,15 @@ public abstract class HomeVetDatabaseBuilder extends RoomDatabase {
         }
         return INSTANCE;
     }
+
+    public abstract UserDAO userDAO();
+
+    public abstract CustomerDAO customerDAO();
+
+    public abstract AnimalDAO animalDAO();
+
+    public abstract AppointmentDAO appointmentDAO();
+
+    public abstract ReportDAO reportDAO();
 }
 

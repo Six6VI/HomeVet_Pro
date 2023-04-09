@@ -3,12 +3,9 @@ package com.example.homevetpro.Entities;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
-import java.sql.Time;
-import java.sql.Timestamp;
-
-@Entity (tableName = "customers")
+@Entity(tableName = "customers")
 public class Customer {
-    @PrimaryKey (autoGenerate = true)
+    @PrimaryKey(autoGenerate = true)
     private int customerID;
 
     private String customerName;

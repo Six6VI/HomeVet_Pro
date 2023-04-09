@@ -1,9 +1,5 @@
 package com.example.homevetpro.UI;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
@@ -15,13 +11,14 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.example.homevetpro.Database.Repository;
 import com.example.homevetpro.Entities.Animal;
 import com.example.homevetpro.Entities.Appointment;
-import com.example.homevetpro.Entities.Customer;
 import com.example.homevetpro.R;
-
-import org.w3c.dom.Text;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -33,6 +30,7 @@ import java.util.Locale;
 
 public class AnimalAdd extends AppCompatActivity {
 
+    final Calendar mCalendarBirth = Calendar.getInstance();
     EditText editID;
     EditText editName;
     EditText editType;
@@ -44,11 +42,7 @@ public class AnimalAdd extends AppCompatActivity {
     EditText editEnterDate;
     EditText editModifyDate;
     EditText editCustAnimalID;
-    EditText getEditCustAnimalName;
-
     DatePickerDialog.OnDateSetListener birthDate;
-    final Calendar mCalendarBirth = Calendar.getInstance();
-
     int animalID;
     String animalName;
     String animalType;
@@ -140,10 +134,10 @@ public class AnimalAdd extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (animalID == -1) {
-                    animal = new Animal(0, editName.getText().toString(), editType.getText().toString(), editGender.getText().toString(), editBirthday.getText().toString(), editColor.getText().toString(), Integer.valueOf(editWeight.getText().toString()), editNotes.getText().toString(), editEnterDate.getText().toString(), editModifyDate.getText().toString(), Integer.valueOf(editCustAnimalID.getText().toString()));
+                    animal = new Animal(0, editName.getText().toString(), editType.getText().toString(), editGender.getText().toString(), editBirthday.getText().toString(), editColor.getText().toString(), Integer.parseInt(editWeight.getText().toString()), editNotes.getText().toString(), editEnterDate.getText().toString(), editModifyDate.getText().toString(), Integer.parseInt(editCustAnimalID.getText().toString()));
                     repository.insert(animal);
                 } else {
-                    animal = new Animal(animalID, editName.getText().toString(), editType.getText().toString(), editGender.getText().toString(), editBirthday.getText().toString(), editColor.getText().toString(), Integer.valueOf(editWeight.getText().toString()), editNotes.getText().toString(), editEnterDate.getText().toString(), editModifyDate.getText().toString(), Integer.valueOf(editCustAnimalID.getText().toString()));
+                    animal = new Animal(animalID, editName.getText().toString(), editType.getText().toString(), editGender.getText().toString(), editBirthday.getText().toString(), editColor.getText().toString(), Integer.parseInt(editWeight.getText().toString()), editNotes.getText().toString(), editEnterDate.getText().toString(), editModifyDate.getText().toString(), Integer.parseInt(editCustAnimalID.getText().toString()));
                     repository.update(animal);
                 }
                 Intent intent = new Intent(AnimalAdd.this, AnimalList.class);
@@ -155,15 +149,15 @@ public class AnimalAdd extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (animalID == -1) {
-                    animal = new Animal(0, editName.getText().toString(), editType.getText().toString(), editGender.getText().toString(), editBirthday.getText().toString(), editColor.getText().toString(), Integer.valueOf(editWeight.getText().toString()), editNotes.getText().toString(), editEnterDate.getText().toString(), editModifyDate.getText().toString(), Integer.valueOf(editCustAnimalID.getText().toString()));
+                    animal = new Animal(0, editName.getText().toString(), editType.getText().toString(), editGender.getText().toString(), editBirthday.getText().toString(), editColor.getText().toString(), Integer.parseInt(editWeight.getText().toString()), editNotes.getText().toString(), editEnterDate.getText().toString(), editModifyDate.getText().toString(), Integer.parseInt(editCustAnimalID.getText().toString()));
                     repository.insert(animal);
                 } else {
-                    animal = new Animal(animalID, editName.getText().toString(), editType.getText().toString(), editGender.getText().toString(), editBirthday.getText().toString(), editColor.getText().toString(), Integer.valueOf(editWeight.getText().toString()), editNotes.getText().toString(), editEnterDate.getText().toString(), editModifyDate.getText().toString(), Integer.valueOf(editCustAnimalID.getText().toString()));
+                    animal = new Animal(animalID, editName.getText().toString(), editType.getText().toString(), editGender.getText().toString(), editBirthday.getText().toString(), editColor.getText().toString(), Integer.parseInt(editWeight.getText().toString()), editNotes.getText().toString(), editEnterDate.getText().toString(), editModifyDate.getText().toString(), Integer.parseInt(editCustAnimalID.getText().toString()));
                     repository.update(animal);
                 }
 
                 int animalID = Integer.parseInt(editID.getText().toString());
-                int animalCustomerID =Integer.parseInt(editCustAnimalID.getText().toString());
+                int animalCustomerID = Integer.parseInt(editCustAnimalID.getText().toString());
                 Intent intent = new Intent(AnimalAdd.this, AppointmentDetails.class);
                 intent.putExtra("appAnimalID", animalID);
                 intent.putExtra("appCustID", animalCustomerID);
@@ -175,7 +169,6 @@ public class AnimalAdd extends AppCompatActivity {
         editBirthday.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Date date;
                 String info = editBirthday.getText().toString();
                 try {
                     mCalendarBirth.setTime(sdf.parse(info));
@@ -198,6 +191,7 @@ public class AnimalAdd extends AppCompatActivity {
             }
         };
     }
+
     private void updateLabelBirth() {
         String myFormat = "MM-dd-yy";
         SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);

@@ -1,10 +1,5 @@
 package com.example.homevetpro.UI;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.SearchView;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
@@ -13,9 +8,13 @@ import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SearchView;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.example.homevetpro.Database.Repository;
 import com.example.homevetpro.Entities.Animal;
-import com.example.homevetpro.Entities.Customer;
 import com.example.homevetpro.R;
 
 import java.util.List;
@@ -28,7 +27,6 @@ public class AnimalList extends AppCompatActivity {
     List<Animal> animalList;
     AnimalAdapter animalAdapter;
     int animalID;
-    SearchView searchView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,13 +36,13 @@ public class AnimalList extends AppCompatActivity {
 
         animalList = repository.getmAllAnimals();
         animalAdapter = new AnimalAdapter(this, animalList);
-        animalID = getIntent().getIntExtra("animalID",-1);
+        animalID = getIntent().getIntExtra("animalID", -1);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         animalRecyclerView();
 
-        Button exitAnimal =findViewById(R.id.animalExit);
+        Button exitAnimal = findViewById(R.id.animalExit);
         exitAnimal.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

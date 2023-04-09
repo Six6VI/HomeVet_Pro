@@ -3,8 +3,6 @@ package com.example.homevetpro.Entities;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
-import java.sql.Timestamp;
-
 @Entity(tableName = "animals")
 public class Animal {
     @PrimaryKey(autoGenerate = true)

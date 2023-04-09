@@ -1,28 +1,22 @@
 package com.example.homevetpro.UI;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.SearchView;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.homevetpro.Database.Repository;
 import com.example.homevetpro.Entities.Animal;
-import com.example.homevetpro.Entities.Appointment;
 import com.example.homevetpro.Entities.Customer;
-import com.example.homevetpro.Entities.User;
 import com.example.homevetpro.R;
 
-import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -48,7 +42,6 @@ public class CustomerDetails extends AppCompatActivity {
     String customerModifyDate;
 
     Customer customer;
-    Customer current;
     Repository repository;
 
     List<Animal> animalList;

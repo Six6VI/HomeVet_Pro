@@ -1,10 +1,5 @@
 package com.example.homevetpro.UI;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.SearchView;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
@@ -12,15 +7,17 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
-import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SearchView;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.homevetpro.Database.Repository;
 import com.example.homevetpro.Entities.Customer;
 import com.example.homevetpro.R;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 
 public class CustomerList extends AppCompatActivity {
 
@@ -29,7 +26,6 @@ public class CustomerList extends AppCompatActivity {
     List<Customer> mCustomer;
     CustomerAdapter customerAdapter;
     int custID;
-    SearchView searchView;
 
 
     @Override
@@ -48,20 +44,16 @@ public class CustomerList extends AppCompatActivity {
 
         Button addCustomer = findViewById(R.id.custAdd);
         Button exitCustomer = findViewById(R.id.custExit);
-        exitCustomer.setOnClickListener(new View.OnClickListener()
-
-        {
+        exitCustomer.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick (View v){
+            public void onClick(View v) {
                 Intent intent2 = new Intent(CustomerList.this, HomeScreen.class);
                 startActivity(intent2);
             }
         });
-        addCustomer.setOnClickListener(new View.OnClickListener()
-
-        {
+        addCustomer.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick (View v){
+            public void onClick(View v) {
                 Intent intent = new Intent(CustomerList.this, CustomerDetails.class);
                 startActivity(intent);
             }

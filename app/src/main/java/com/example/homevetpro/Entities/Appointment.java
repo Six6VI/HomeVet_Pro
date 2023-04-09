@@ -1,14 +1,7 @@
 package com.example.homevetpro.Entities;
 
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
-
-import com.example.homevetpro.Database.Repository;
-
-import java.sql.Date;
-import java.sql.Timestamp;
-import java.time.LocalDate;
 
 
 @Entity(tableName = "appointments")

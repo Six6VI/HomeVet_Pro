@@ -1,29 +1,19 @@
 package com.example.homevetpro.UI;
 
-import androidx.appcompat.app.AppCompatActivity;
-
-import android.app.Application;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Spinner;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.example.homevetpro.Database.Repository;
-import com.example.homevetpro.Entities.Animal;
-import com.example.homevetpro.Entities.Appointment;
-import com.example.homevetpro.Entities.Customer;
 import com.example.homevetpro.Entities.Report;
 import com.example.homevetpro.R;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class ReportInvoice extends AppCompatActivity {
 
@@ -43,10 +33,7 @@ public class ReportInvoice extends AppCompatActivity {
     double appCost;
     int appID;
 
-    Customer customer;
-    Animal animal;
     Repository repository;
-    List<Report> reportList;
     Report report;
     Report current;
 
@@ -62,13 +49,13 @@ public class ReportInvoice extends AppCompatActivity {
         editAppCost = findViewById(R.id.editTextReportAppCost);
         editAppId = findViewById(R.id.editTextReportAppID);
 
-        reportID=getIntent().getIntExtra("reportID",-1);
-        custName=getIntent().getStringExtra("customerName");
-        animalName=getIntent().getStringExtra("animalName");
-        appDate=getIntent().getStringExtra("appDate");
-        appNotes=getIntent().getStringExtra("appNotes");
-        appCost=getIntent().getDoubleExtra("appCost",0);
-        appID=getIntent().getIntExtra("appID",-1);
+        reportID = getIntent().getIntExtra("reportID", -1);
+        custName = getIntent().getStringExtra("customerName");
+        animalName = getIntent().getStringExtra("animalName");
+        appDate = getIntent().getStringExtra("appDate");
+        appNotes = getIntent().getStringExtra("appNotes");
+        appCost = getIntent().getDoubleExtra("appCost", 0);
+        appID = getIntent().getIntExtra("appID", -1);
 
         String sReportID = String.valueOf(reportID);
         String appointmentCost = String.valueOf(appCost);
@@ -82,7 +69,7 @@ public class ReportInvoice extends AppCompatActivity {
         editAppCost.setText(appointmentCost);
         editAppId.setText(appointmentID);
 
-        repository= new Repository(getApplication());
+        repository = new Repository(getApplication());
 
 
         Button button = findViewById(R.id.buttonReportSave);
@@ -91,10 +78,10 @@ public class ReportInvoice extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (reportID == -1) {
-                    report = new Report(0, editCustomer.getText().toString(),editAnimal.getText().toString(),editAppDate.getText().toString(),editAppNotes.getText().toString(),Double.valueOf(editAppCost.getText().toString()),Integer.parseInt(editAppId.getText().toString()));
+                    report = new Report(0, editCustomer.getText().toString(), editAnimal.getText().toString(), editAppDate.getText().toString(), editAppNotes.getText().toString(), Double.valueOf(editAppCost.getText().toString()), Integer.parseInt(editAppId.getText().toString()));
                     repository.insert(report);
                 } else {
-                    report = new Report(reportID, editCustomer.getText().toString(),editAnimal.getText().toString(),editAppDate.getText().toString(),editAppNotes.getText().toString(),Double.valueOf(editAppCost.getText().toString()),Integer.parseInt(editAppId.getText().toString()));
+                    report = new Report(reportID, editCustomer.getText().toString(), editAnimal.getText().toString(), editAppDate.getText().toString(), editAppNotes.getText().toString(), Double.valueOf(editAppCost.getText().toString()), Integer.parseInt(editAppId.getText().toString()));
                     repository.update(report);
                 }
                 Intent intent = new Intent(ReportInvoice.this, ReportList.class);
@@ -113,6 +100,7 @@ public class ReportInvoice extends AppCompatActivity {
 
 
     }
+
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.home_screen, menu);
 
