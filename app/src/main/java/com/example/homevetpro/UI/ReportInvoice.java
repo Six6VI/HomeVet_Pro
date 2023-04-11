@@ -102,7 +102,7 @@ public class ReportInvoice extends AppCompatActivity {
     }
 
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.home_screen, menu);
+        getMenuInflater().inflate(R.menu.home_screen_notify, menu);
 
         return true;
     }
@@ -114,6 +114,18 @@ public class ReportInvoice extends AppCompatActivity {
                 Intent intent = new Intent(ReportInvoice.this, HomeScreen.class);
                 startActivity(intent);
 
+                return true;
+
+            case R.id.share:
+
+                Intent sendIntent = new Intent();
+                sendIntent.setAction(Intent.ACTION_SEND);
+                sendIntent.putExtra(Intent.EXTRA_SUBJECT,"Tom's Vet Clinc" +" Invoice# 0000" + editID.getText().toString());
+                sendIntent.putExtra(Intent.EXTRA_TEXT,"Customer: " + editCustomer.getText().toString()+"\n" + "Animal: " + editAnimal.getText().toString()+"\n"+ "Invoice# 0000" + editID.getText().toString()+"\n"+"\n"  + "Appointment Date: " + editAppDate.getText().toString()+"\n"+ "\n" + "Appointment Report: " + editAppNotes.getText().toString()+"\n"+"\n" + "Total Cost: " +editAppCost.getText().toString());
+                sendIntent.putExtra(Intent.EXTRA_TITLE,editCustomer.getText().toString() +"'s Invoice# 0000" + editID.getText().toString());
+                sendIntent.setType("text/plain");
+                Intent shareIntent = Intent.createChooser(sendIntent,null);
+                startActivity(shareIntent);
                 return true;
 
             case R.id.delete:

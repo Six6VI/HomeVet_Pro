@@ -1,7 +1,10 @@
 package com.example.homevetpro.UI;
 
+import android.app.AlarmManager;
 import android.app.Application;
 import android.app.DatePickerDialog;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
@@ -178,12 +181,6 @@ public class AppointmentDetails extends AppCompatActivity {
         editDate.setText(sdf.format(mCalendarApp.getTime()));
     }
 
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.home_screen, menu);
-
-        return true;
-    }
-
     public static String getcustName(int id) {
         Repository repository = new Repository(new Application());
         for (Customer customer : repository.getmAllCustomers()) {
@@ -191,7 +188,12 @@ public class AppointmentDetails extends AppCompatActivity {
                 customerName = customer.getCustomerName();
         }
         return customerName;
+    }
 
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.home_screen_alert, menu);
+
+        return true;
     }
 
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -200,6 +202,25 @@ public class AppointmentDetails extends AppCompatActivity {
 
                 Intent intent = new Intent(AppointmentDetails.this, HomeScreen.class);
                 startActivity(intent);
+
+                return true;
+
+            case R.id.alert:
+                String appDate = editDate.getText().toString();
+                String myFormat = "MM-dd-yy";
+                SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
+                Date myDate = null;
+                try{
+                    myDate = sdf.parse(appDate);
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+                Long trigger = myDate.getTime();
+                Intent intentDate = new Intent(AppointmentDetails.this, MyReceiver.class);
+                intentDate.putExtra("appDate", customerName + "'s appointment " + appDate);
+                PendingIntent sender = PendingIntent.getBroadcast(AppointmentDetails.this, ++MainActivity.numAlert, intentDate, PendingIntent.FLAG_IMMUTABLE);
+                AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+                alarmManager.set(AlarmManager.RTC_WAKEUP,trigger, sender);
 
                 return true;
 
