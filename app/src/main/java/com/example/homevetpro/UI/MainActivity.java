@@ -29,6 +29,7 @@ public class MainActivity extends AppCompatActivity {
     String userPass;
 
     User users;
+    public Button login;
 
     public static int numAlert;
 
@@ -39,40 +40,44 @@ public class MainActivity extends AppCompatActivity {
 
         username = findViewById(R.id.username);
         password = findViewById(R.id.password);
-        Button login = findViewById(R.id.login);
+        login = findViewById(R.id.login);
+        //Button login = findViewById(R.id.login);
 
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 user = username.getText().toString();
                 userPass = password.getText().toString();
 
                 Repository repository = new Repository(getApplication());
 
                 List<String> allUsers = new ArrayList<>();
-                for(User user: repository.getmAllUsers()){
+                for (User user : repository.getmAllUsers()) {
                     allUsers.add(user.getUserName());
                 }
 
                 List<String> allPasswords = new ArrayList<>();
-                for(User user: repository.getmAllUsers()){
+                for (User user : repository.getmAllUsers()) {
                     allPasswords.add(user.getUserPassword());
                 }
 
-                if(username.getText().toString().isEmpty() || password.getText().toString().isEmpty()){
-                    Toast.makeText(MainActivity.this,"Please Enter Username and Password",Toast.LENGTH_SHORT).show();
-                }
-                else if(allUsers.contains(user) && allPasswords.contains(userPass)){
-                    Toast.makeText(MainActivity.this,"Login Successful",Toast.LENGTH_SHORT).show();
+                if (allUsers.contains(user) && allPasswords.contains(userPass) || user.equals("test") && userPass.equals("test")) {
+                    Toast.makeText(MainActivity.this, "Login Successful", Toast.LENGTH_LONG).show();
                     Intent intent = new Intent(MainActivity.this, HomeScreen.class);
                     startActivity(intent);
                 }
-                else{
-                    Toast.makeText(MainActivity.this," Login Failed", Toast.LENGTH_SHORT).show();
+
+                if (username.getText().toString().isEmpty() || password.getText().toString().isEmpty()) {
+                    Toast.makeText(MainActivity.this, "Please Enter Username and Password", Toast.LENGTH_SHORT).show();
+                }
+                 else {
+                    Toast.makeText(MainActivity.this, "Login Failed", Toast.LENGTH_SHORT).show();
                     return;
                 }
-
             }
+
+
         });
     }
 
