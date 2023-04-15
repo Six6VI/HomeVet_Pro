@@ -62,7 +62,7 @@ public class MainActivity extends AppCompatActivity {
                     allPasswords.add(user.getUserPassword());
                 }
 
-                if (allUsers.contains(user) && allPasswords.contains(userPass) || user.equals("test") && userPass.equals("test")) {
+                if (allUsers.contains(user) && allPasswords.contains(userPass)) {
                     Toast.makeText(MainActivity.this, "Login Successful", Toast.LENGTH_LONG).show();
                     Intent intent = new Intent(MainActivity.this, HomeScreen.class);
                     startActivity(intent);
