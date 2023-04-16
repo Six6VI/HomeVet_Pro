@@ -13,7 +13,9 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.homevetpro.Database.Repository;
 import com.example.homevetpro.Entities.Animal;
+import com.example.homevetpro.Entities.Appointment;
 import com.example.homevetpro.Entities.Customer;
+import com.example.homevetpro.Entities.Report;
 import com.example.homevetpro.Entities.User;
 import com.example.homevetpro.R;
 
@@ -62,14 +64,13 @@ public class MainActivity extends AppCompatActivity {
                     allPasswords.add(user.getUserPassword());
                 }
 
-                if (allUsers.contains(user) && allPasswords.contains(userPass)) {
+                if (username.getText().toString().isEmpty() || password.getText().toString().isEmpty()) {
+                    Toast.makeText(MainActivity.this, "Please Enter Username and Password", Toast.LENGTH_SHORT).show();
+                }
+                else if (allUsers.contains(user) && allPasswords.contains(userPass)) {
                     Toast.makeText(MainActivity.this, "Login Successful", Toast.LENGTH_LONG).show();
                     Intent intent = new Intent(MainActivity.this, HomeScreen.class);
                     startActivity(intent);
-                }
-
-                if (username.getText().toString().isEmpty() || password.getText().toString().isEmpty()) {
-                    Toast.makeText(MainActivity.this, "Please Enter Username and Password", Toast.LENGTH_SHORT).show();
                 }
                  else {
                     Toast.makeText(MainActivity.this, "Login Failed", Toast.LENGTH_SHORT).show();
@@ -105,12 +106,9 @@ public class MainActivity extends AppCompatActivity {
                 Animal animal = new Animal(1, "Jaxon", "Cat", "Male", "01-01-2023", "Black", 12, "Hips are uneven.", "04-05-2023", "02-03-2023", 1);
                 Animal animal2 = new Animal(2, "Sox", "Cat", "Female", "03-18-1999", "White", 8, "Deaf", "12-01-2022", "02-03-2023", 2);
                 Animal animal3 = new Animal(3, "Steve", "Dog", "Female", "04-01-2021", "Brown", 35, "Does not like strangers.", "08-06-2022", "02-03-2023", 3);
-                Animal animal4 = new Animal(4, "Toby", "Dog", "Male", "01-20-2018", "Tan", 40, "Caution, bites when excited.", "09-01-2012", "02-03-2023", 4);
-                Animal animal5 = new Animal(5, "Blue", "Dog", "Male", "05-01-2016", "Grey", 55, "Very sweet dog.", "04-20-2021", "02-03-2023", 5);
-                Animal animal6 = new Animal(6, "Stripes", "Cat", "Male", "07-24-2020", "Orange", 10, "Allergic to grass.", "08-13-2022", "02-03-2023", 6);
-                Animal animal7 = new Animal(7, "Spot", "Cat", "Female", "11-18-2021", "Black", 9, "Prone to hairballs.", "03-29-2020", "02-03-2023", 7);
-                Animal animal8 = new Animal(8, "Goldie", "Cat", "Male", "10-17-2022", "Tan", 11, "Missing right eye.", "11-13-2021", "02-03-2023", 8);
-                Animal animal9 = new Animal(9, "Duke", "Dog", "Female", "08-23-2012", "Black", 65, "Has joint pain.", "09-06-2020", "02-03-2023", 9);
+                Appointment appointment = new Appointment(1,"04-18-2023","Allergic to grass", 45, 35.99,"04-14-2023","04-14-2023",1,1);
+                Report report = new Report(1,"Justin Hogle","Jaxon","04-18-2023","Allergic to grass",35.99,1);
+
                 Repository repository = new Repository(getApplication());
                 repository.insert(user);
                 repository.insert(customer);
@@ -126,12 +124,10 @@ public class MainActivity extends AppCompatActivity {
                 repository.insert(animal);
                 repository.insert(animal2);
                 repository.insert(animal3);
-                repository.insert(animal4);
-                repository.insert(animal5);
-                repository.insert(animal6);
-                repository.insert(animal7);
-                repository.insert(animal8);
-                repository.insert(animal9);
+
+                repository.insert(appointment);
+                repository.insert(report);
+
 
 
                 return true;
