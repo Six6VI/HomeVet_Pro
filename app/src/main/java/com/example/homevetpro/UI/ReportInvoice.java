@@ -42,12 +42,18 @@ public class ReportInvoice extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_report_invoice);
         editID = findViewById(R.id.editTextReportID);
+        editID.setEnabled(false);
         editCustomer = findViewById(R.id.editTextReportCustomerName);
+        editCustomer.setEnabled(false);
         editAnimal = findViewById(R.id.editTextReportAnimalName);
+        editAnimal.setEnabled(false);
         editAppDate = findViewById(R.id.editTextReportAppDate);
+        editAppDate.setEnabled(false);
         editAppNotes = findViewById(R.id.editTextReportAppNotes);
         editAppCost = findViewById(R.id.editTextReportAppCost);
+        editAppCost.setEnabled(false);
         editAppId = findViewById(R.id.editTextReportAppID);
+        editAppId.setEnabled(false);
 
         reportID = getIntent().getIntExtra("reportID", -1);
         custName = getIntent().getStringExtra("customerName");

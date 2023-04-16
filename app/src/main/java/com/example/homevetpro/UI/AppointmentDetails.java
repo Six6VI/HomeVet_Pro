@@ -144,7 +144,7 @@ public class AppointmentDetails extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                Intent intent = new Intent(AppointmentDetails.this, AnimalList.class);
+                Intent intent = new Intent(AppointmentDetails.this, CustomerList.class);
                 startActivity(intent);
             }
         });
